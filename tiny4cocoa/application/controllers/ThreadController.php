@@ -36,15 +36,15 @@ class ThreadController extends baseController
     
     $threadModel = new ThreadModel();
     $threadPageSize = 40;
-    $threadCount = $threadModel->threadCount();
-    $threads = $threadModel->threads($page,$threadPageSize,$order);
+    $threadCount = $threadModel->waterCount();
+    $threads = $threadModel->waters($page,$threadPageSize,$order);
 		$pageControl = ToolModel::pageControl($page,$threadCount,$threadPageSize,"<a href='/thread/$action/#page#/'>");
       
     $this->_mainContent->assign("threads",$threads);
     $this->_mainContent->assign("pageControl",$pageControl);
     
     
-    $newthreads = $threadModel->threads(1,20);
+    $newthreads = $threadModel->waters(1,20);
     $this->_mainContent->assign("newthreads",$newthreads);
     
     $toplistModel = new ToplistModel();
@@ -150,7 +150,7 @@ class ThreadController extends baseController
     $newthreads = $cacheModel->getCache("newthreads","newthreads");
     if(!$newthreads){
 
-      $newthreads = $threadModel->threads(1,20);
+      $newthreads = $threadModel->waters (1,20);
       $cacheModel->createCache("newthreads","newthreads",$newthreads);
     }
     $this->_mainContent->assign("threads",$newthreads);
