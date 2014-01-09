@@ -130,7 +130,7 @@ function sendweibo() {
       <a name="top_floor">
       {if $thread.image}
         <a href="/user/show/{$thread.createbyid}/{$thread.createby}/" target="_blank">
-          <img src="{$thread.image}" width="40" style="float:right;padding:5px;">
+          <img src="{$thread.image}" width="40" style="float:right;border-radius:6px;">
         </a>
       {/if}
       <div class="jsvote" style="float:left;margin-top:10px;" threadid="{$thread.id}" vote="{$userVote}"></div>
@@ -207,7 +207,7 @@ function sendweibo() {
         暂无回答
       </div>
     {else}
-      <div class="content-unit">
+      <div class="content-unit" style="margin-left:15px;">
         共{$replysCount}个回答
         {foreach from=$replys item=item name=comments}
           <div class="threadblock">
@@ -217,16 +217,32 @@ function sendweibo() {
             {else}
             {if $thread.image}
               <a href="/user/show/{$item.userid}/{$item.name}/" target="_blank">
-                <img src="{$item.image}" width="48" style="float:left;padding:5px;">
+                <img src="{$item.image}" width="24" style="float:right;border-radius:3px;">
               </a>
             {/if}
-            <div style="margin-left:54px;">
+            <div class="jsvote" style="float:left;" threadid="{$thread.id}" vote="{$userVote}"></div>
+            <div style="margin-left:15px;">
               <div class="muted">
                 <a href="/user/show/{$item.userid}/{$item.name}/" class="muted" target="_blank">{$item.name}</a> 回复于 {$item.createtime}
                
                 {if $item.createtime<>$item.updatetime && $thread.updatedate<>0}
                  ｜ 更新于 {$thread.updatetime}
                 {/if}
+                <br/>
+                <span id="voteinfo">
+                  {if $voteInfo.likeusers}
+                    {foreach from=$voteInfo.likeusers item=item}
+                      <a href="/user/show/{$item.userid}/" class="muted" target="_blank">{$item.username}</a> 
+                      {/foreach} 等{$voteInfo.likecount}人欣赏。
+                  {else}
+                    无人欣赏。
+                  {/if}
+                </span>
+                <span id="dislikeinfo">
+                  {if $voteInfo.dislikecount>0}
+                   {$voteInfo.dislikecount}人反对。
+                  {/if}
+                </span>
               
               </div>
               <div style="padding:2px;">
