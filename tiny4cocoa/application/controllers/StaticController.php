@@ -33,6 +33,7 @@ class StaticController extends tinyApp_Controller
     include("$framework/Jcrop/js/jquery.Jcrop.min.js");
     include("$framework/jsvote/src/jquery.jsvote.js");
     include("$path/base.js");
+    include("$path/thread.js");
   }
 	
   public function wmdjsAction() {

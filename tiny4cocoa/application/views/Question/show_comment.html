@@ -5,37 +5,40 @@
   <a href="/user/show/{$item.userid}/{$item.name}/" target="_blank">
     <img src="{$item.image}" width="24" style="float:right;border-radius:3px;">
   </a>
-  <div class="jsvote" style="float:left;" threadid="{$thread.id}" vote="{$userVote}"></div>
+  <div class="jsvote" style="float:left;" threadid="{$thread.id}" replyid="{$item.id}" vote="{$item.userVote}"></div>
   <div style="margin-left:25px;">
     <div class="muted">
-    <a href="/user/show/{$item.userid}/{$item.name}/" class="muted" target="_blank">{$item.name}</a> 回复于 {$item.createtime}
-   
-    {if $item.createtime<>$item.updatetime && $thread.updatedate<>0}
-     ｜ 更新于 {$thread.updatetime}
-    {/if}
-    <br/>
-    <span id="voteinfo">
-      {if $voteInfo.likeusers}
-        {foreach from=$voteInfo.likeusers item=vote}
-          <a href="/user/show/{$item.userid}/" class="muted" target="_blank">{$vote.username}</a> 
-          {/foreach} 等{$voteInfo.likecount}人欣赏。
-      {else}
-        无人欣赏。
+      <a href="/user/show/{$item.userid}/{$item.name}/" class="muted" target="_blank">
+        {$item.name}
+      </a> 
+      回复于 {$item.createtime}
+      {if $item.createtime<>$item.updatetime && $thread.updatedate<>0}
+        ｜ 更新于 {$thread.updatetime}
       {/if}
-    </span>
-    <span id="dislikeinfo">
-      {if $voteInfo.dislikecount>0}
-       {$voteInfo.dislikecount}人反对。
-      {/if}
-    </span>
-  </div>
-  <div style="padding:2px;">
-    {$item.content}
-  </div>
-  {if $userid==$item.userid}
-    <div style="text-align:right;">
-      <a href="/thread/editreply/{$item.id}/">编辑</a>
+      <br/>
+      <span id="voteinfo">
+        {if $item.voteInfo.likeusers}
+          {foreach from=$item.voteInfo.likeusers item=vote}
+            <a href="/user/show/{$item.userid}/" class="muted" target="_blank">{$vote.username}</a> 
+          {/foreach} 
+          等{$voteInfo.likecount}人欣赏。
+        {else}
+          无人欣赏。
+        {/if}
+      </span>
+      <span id="dislikeinfo">
+        {if $item.voteInfo.dislikecount>0}
+          {$item.voteInfo.dislikecount}人反对。
+        {/if}
+      </span>
     </div>
-  {/if}
-</div>
+    <div style="padding:2px;">
+      {$item.content}
+    </div>
+    {if $userid==$item.userid}
+      <div style="text-align:right;">
+        <a href="/thread/editreply/{$item.id}/">编辑</a>
+      </div>
+    {/if}
+  </div>
 {/if}
