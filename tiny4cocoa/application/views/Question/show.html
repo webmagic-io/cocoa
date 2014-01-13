@@ -231,8 +231,8 @@ function sendweibo() {
                 <br/>
                 <span id="voteinfo">
                   {if $voteInfo.likeusers}
-                    {foreach from=$voteInfo.likeusers item=item}
-                      <a href="/user/show/{$item.userid}/" class="muted" target="_blank">{$item.username}</a> 
+                    {foreach from=$voteInfo.likeusers item=vote}
+                      <a href="/user/show/{$item.userid}/" class="muted" target="_blank">{$vote.username}</a> 
                       {/foreach} 等{$voteInfo.likecount}人欣赏。
                   {else}
                     无人欣赏。
@@ -243,7 +243,6 @@ function sendweibo() {
                    {$voteInfo.dislikecount}人反对。
                   {/if}
                 </span>
-              
               </div>
               <div style="padding:2px;">
                 {$item.content}
