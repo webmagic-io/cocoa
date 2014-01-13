@@ -124,6 +124,7 @@ class QuestionController extends baseController
     
     $threads = $threadModel->questions(1,20);
     $userVote = $threadModel->userVote($id,$this->userid);
+    $voteInfo = $threadModel->voteInfo($id);
       
     $this->_mainContent->assign("threads",$threads);
     
