@@ -42,10 +42,29 @@ $(document).ready(function() {
       }
       var voteObj = $(vote.target);
       var threadid = voteObj.attr("threadid");
-			$.post('/thread/vote/',
+      var replyid = voteObj.attr("replyid");
+      if(replyid)
+        voteReply(threadid,replyid,stat);
+      else
+        voteThread(threadid,stat);
+      return true;
+	});
+
+  $("#newreplyform").validate();
+  $("#wmd-input").bind('keyup.ctrl_return', function(){
+    $("#submit").click();
+  });
+  $(document).bind('keyup.esc',function(){
+    window.location.href = "/";
+  });
+});
+
+function voteThread(threadid,stat) {
+
+  $.post('/thread/vote/',
       { threadid:threadid,
         vote:stat },
-				function(data) {
+        function(data) {
           
           var html;
           if(!data.likeusers || data.likeusers.length==0) {
@@ -69,19 +88,41 @@ $(document).ready(function() {
             html = data.dislikecount + "人反对。";
           $("#dislikeinfo").html(html);
           
-				},"json");
-        return true;
-	});
-  $("#newreplyform").validate();
-  $("#wmd-input").bind('keyup.ctrl_return', function(){
-    $("#submit").click();
-  });
-  $(document).bind('keyup.esc',function(){
-    window.location.href = "/";
-  });
-});
+        },"json");
+}
+
+function voteReply(threadid,replyid,stat) {
 
 
+  $.post('/thread/votereply/',
+      { threadid:threadid,
+        replyid:replyid,
+        vote:stat },
+        function(data) {
+          
+          // var html;
+          // if(!data.likeusers || data.likeusers.length==0) {
+            
+          //   var html = "无人欣赏。";
+          // }else {
+            
+          //   var users = new Array();
+          //   for (var i=0;i<data.likeusers.length;i++) {
+              
+          //     users[i] = "<a href='/user/show/" + data.likeusers[i].userid + "/' class='muted' target='_blank'>" + data.likeusers[i].username + "</a>";
+          //   }
+          //   var usersStr = users.join("、");
+          //   var html = usersStr + "等"+data.likecount+"人欣赏。";
+            
+          // }
+          // $("#voteinfo").html(html);
+          // if(data.dislikecount==0)
+          //   html = "";
+          // else
+          //   html = data.dislikecount + "人反对。";
+          // $("#dislikeinfo").html(html);
+        },"json");
+}
 </script>
 <div class="row">
   

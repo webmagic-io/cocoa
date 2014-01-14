@@ -302,6 +302,25 @@ class ThreadController extends baseController
     $result = $threadModel->vote($threadid, $this->userid,$vote);
     echo json_encode($result);
   }
+
+  public function votereplyAction() {
+    
+    if($this->userid==0)
+      die("no_login");
+    
+    $userModel = new UserModel();
+    $userInfo = $userModel->userInfo($this->userid);
+    $reputation = $userInfo["reputation"];
+    if($reputation<20)
+      die("reputation_too_low");
+    
+    $threadid = $_POST["threadid"];
+    $vote = $_POST["vote"]; 
+    $replyid = $_POST["replyid"];
+    $threadModel = new ThreadModel();
+    $result = $threadModel->voteReply($threadid, $replyid, $this->userid, $vote);
+    echo json_encode($result);
+  } 
   
   public function transformAction() {
     
