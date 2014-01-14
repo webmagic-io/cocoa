@@ -100,27 +100,27 @@ function voteReply(threadid,replyid,stat) {
         vote:stat },
         function(data) {
           
-          // var html;
-          // if(!data.likeusers || data.likeusers.length==0) {
+          var html;
+          if(!data.likeusers || data.likeusers.length==0) {
             
-          //   var html = "无人欣赏。";
-          // }else {
+            var html = "无人欣赏。";
+          }else {
             
-          //   var users = new Array();
-          //   for (var i=0;i<data.likeusers.length;i++) {
+            var users = new Array();
+            for (var i=0;i<data.likeusers.length;i++) {
               
-          //     users[i] = "<a href='/user/show/" + data.likeusers[i].userid + "/' class='muted' target='_blank'>" + data.likeusers[i].username + "</a>";
-          //   }
-          //   var usersStr = users.join("、");
-          //   var html = usersStr + "等"+data.likecount+"人欣赏。";
+              users[i] = "<a href='/user/show/" + data.likeusers[i].userid + "/' class='muted' target='_blank'>" + data.likeusers[i].username + "</a>";
+            }
+            var usersStr = users.join("、");
+            var html = usersStr + "等"+data.likecount+"人欣赏。";
             
-          // }
-          // $("#voteinfo").html(html);
-          // if(data.dislikecount==0)
-          //   html = "";
-          // else
-          //   html = data.dislikecount + "人反对。";
-          // $("#dislikeinfo").html(html);
+          }
+          $("#voteinfo-"+replyid).html(html);
+          if(data.dislikecount==0)
+            html = "";
+          else
+            html = data.dislikecount + "人反对。";
+          $("#dislikeinfo-"+replyid).html(html);
         },"json");
 }
 </script>

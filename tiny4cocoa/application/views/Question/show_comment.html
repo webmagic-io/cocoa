@@ -16,7 +16,7 @@
         ｜ 更新于 {$thread.updatetime}
       {/if}
       <br/>
-      <span id="voteinfo">
+      <span id="voteinfo-{$item.id}">
         {if $item.voteInfo.likeusers}
           {foreach from=$item.voteInfo.likeusers item=vote}
             <a href="/user/show/{$item.userid}/" class="muted" target="_blank">{$vote.username}</a> 
@@ -26,7 +26,7 @@
           无人欣赏。
         {/if}
       </span>
-      <span id="dislikeinfo">
+      <span id="dislikeinfo-{$item.id}">
         {if $item.voteInfo.dislikecount>0}
           {$item.voteInfo.dislikecount}人反对。
         {/if}

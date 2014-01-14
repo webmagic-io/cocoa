@@ -570,7 +570,6 @@ class ThreadModel extends baseDbModel {
       return $this->updateReplyVoteInfo($threadid, $replyid);
     
     $time = time();
-    var_dump($vote);
     if($vote=="up") {
       
       $votenum = 0;
