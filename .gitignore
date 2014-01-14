@@ -12,3 +12,5 @@ rsscache/*
 tiny4cocoa/rsscache/*
 uploadtemp/*
 tiny4cocoa/cache/*
+*.sublime-project
+*.sublime-workspace
