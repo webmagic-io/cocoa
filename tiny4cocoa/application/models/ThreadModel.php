@@ -384,7 +384,7 @@ class ThreadModel extends baseDbModel {
     $sql = "SELECT count(`userid`) as `c` FROM `bbs_thread_vote` WHERE threadid = $threadid AND `vote` = 0;";
     $result = $this->fetchArray($sql);
     $likecount = $result[0]["c"];
-    
+
     $sql = "SELECT count(`userid`) as `c` FROM `bbs_thread_vote` WHERE threadid = $threadid AND `vote` = 1;";
     $result = $this->fetchArray($sql);
     $dislikecount = $result[0]["c"];
@@ -436,7 +436,7 @@ class ThreadModel extends baseDbModel {
   private function additiontime($voteSocre) {
 
     $addHour = 2.0; 
-    if($voteS>0){
+    if($voteSocre>0){
       $additiontime = log(1+$voteSocre,10)*$addHour*60*60;
     }
     else if($voteSocre==0){
