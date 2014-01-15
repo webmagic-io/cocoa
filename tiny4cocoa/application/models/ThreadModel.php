@@ -516,28 +516,6 @@ class ThreadModel extends baseDbModel {
     return $data;
   }
 
-  private function likers2Likeusers($likersStr) {
-
-    $likers = explode(";", $likersStr);
-    if(count($likers)==0) 
-      return NULL;
-    
-    $likeusers = array(); 
-    foreach ($likers as $user) {
-      
-      $userinfo = array();
-      $array = explode(",", $user);
-      if(count($array)>=2) {
-        $userinfo["userid"] = $array[0];
-        $userinfo["username"] = $array[1];
-        $likeusers[] = $userinfo;
-      }
-    }
-    return $likeusers;
-  }
-
-
-
   public function vote($threadid, $userid, $vote) {
     
     if($userid==0)
@@ -635,6 +613,45 @@ class ThreadModel extends baseDbModel {
     return $this->updateReplyVoteInfo($threadid, $replyid);
   }
   
+
+  public function fillinUserReplyVote($replys, $threadid, $userid) {
+
+    $result = $this ->select("bbs_reply_vote")
+                    ->fields("`replyid`, `vote`")
+                    ->where("`threadid` = $threadid AND `userid`= $userid")
+                    ->fetchAll();
+    if (!$result || count($result)==0 || count($replys)==0) {
+      
+      return $replys;
+    }
+
+    $votes = $this->userVoteArray2Dict($result);
+    $newReplys = array();
+    foreach ($replys as $reply) {
+      
+      $replyid = $reply["id"];
+      if(array_key_exists($replyid, $votes)) {
+
+        if ($votes[$replyid] == 0) 
+          $reply["userVote"] = "up";
+        else
+          $reply["userVote"] = "down";
+      }
+      $newReplys[] = $reply;
+    }
+    return $newReplys;
+  }
+
+  private function userVoteArray2Dict($votes) {
+
+    $dict = array();
+    foreach ($votes as $vote) {
+
+      $dict[$vote["replyid"]] = $vote["vote"];
+    }
+    return $dict;
+  }
+
   private function removeVote($threadid, $userid) {
     
 		$sql = "DELETE FROM `bbs_thread_vote` 

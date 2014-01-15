@@ -116,6 +116,9 @@ class QuestionController extends baseController
     
     $replysCount = $threadModel->replysCountById($id);
     $replys = $threadModel->replysById($id);
+    if($this->userid)
+      $replys = $threadModel->fillinUserReplyVote($replys, $id, $this->userid);
+
     $alreayAnswer = $threadModel->alreayAnswerThisQuestion($id,$this->userid);
     $this->_mainContent->assign("thread",$thread);
     $this->_mainContent->assign("replysCount",$replysCount);
