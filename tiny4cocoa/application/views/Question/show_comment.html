@@ -17,18 +17,20 @@
       {/if}
       <br/>
       <span id="voteinfo-{$item.id}">
-        {if $item.voteInfo.likeusers}
-          {foreach from=$item.voteInfo.likeusers item=vote}
-            <a href="/user/show/{$item.userid}/" class="muted" target="_blank">{$vote.username}</a> 
+        {if $item.likeusers}
+          {foreach from=$item.likeusers item=vote}
+            <a href="/user/show/{$item.userid}/" class="muted" target="_blank">
+              {$vote.username}
+            </a> 
           {/foreach} 
-          等{$voteInfo.likecount}人欣赏。
+          等{$item.likecount}人欣赏。
         {else}
           无人欣赏。
         {/if}
       </span>
       <span id="dislikeinfo-{$item.id}">
-        {if $item.voteInfo.dislikecount>0}
-          {$item.voteInfo.dislikecount}人反对。
+        {if $item.dislikecount>0}
+          {$item.dislikecount}人反对。
         {/if}
       </span>
     </div>

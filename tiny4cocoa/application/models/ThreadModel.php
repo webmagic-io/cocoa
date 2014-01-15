@@ -126,7 +126,7 @@ class ThreadModel extends baseDbModel {
   
   public function replysById($id) {
     
-    $sql = "SELECT * FROM `thread_replys` where threadid = $id ORDER BY `id`;";
+    $sql = "SELECT * FROM `thread_replys` where `threadid` = $id ORDER BY `id`;";
     $result = $this->fetchArray($sql);
     $ret = array();
     if(count($result)==0)
@@ -137,6 +137,7 @@ class ThreadModel extends baseDbModel {
       $item["createtime"] = ToolModel::countTime($item["createdate"]);
       $item["updatetime"] = ToolModel::countTime($item["updatedate"]);
       $item["image"] = DiscuzModel::get_avatar($item["userid"],"small");
+      $item["likeusers"] = json_decode($item["likers"],true);
       $ret[] = $item;
     } 
     return $ret;
@@ -419,9 +420,11 @@ class ThreadModel extends baseDbModel {
     $voteS = $likecount-$dislikecount/3.0;
     $additiontime2 = $this->additiontime($voteS);
 
+    $likeusers = $this->first3ReplyVoteUser($replyid);
     $sql = "UPDATE `thread_replys` 
             set `likecount` = $likecount,
-                `dislikecount` = $dislikecount
+                `dislikecount` = $dislikecount,
+                `likers` = '$likeusers'
             WHERE `id` = $replyid";
     $this->run($sql);
 
@@ -431,6 +434,22 @@ class ThreadModel extends baseDbModel {
 
     $this->updateThreadScore($threadid);
     return $this->replyVoteInfo($replyid);
+  }
+
+  private function first3ReplyVoteUser($replyid) {
+
+    $sql = "SELECT `userid`,`username`
+            FROM `bbs_reply_vote`
+            LEFT JOIN `cocoabbs_uc_members` 
+            ON `cocoabbs_uc_members`.`uid` = `bbs_reply_vote`.`userid`
+            WHERE `replyid` = $replyid AND `vote` = 0
+            ORDER BY updatetime;
+            ";
+    $result = $this->fetchArray($sql);
+    if (!$result || count($result)==0) {
+      return "";
+    }
+    return json_encode($result);
   }
 
   private function additiontime($voteSocre) {
@@ -484,19 +503,40 @@ class ThreadModel extends baseDbModel {
 
   public function replyVoteInfo($replyid) {
     
-    $sql = "SELECT `likecount`,`dislikecount` FROM `thread_replys` WHERE `id` = $replyid;";
+    $sql = "SELECT `likecount`,`dislikecount`,`likers` FROM `thread_replys` WHERE `id` = $replyid;";
     $result = $this->fetchArray($sql);
     $data = $result[0];
     
-    $sql = "SELECT `userid`,`username` FROM `bbs_reply_vote`
-            LEFT JOIN `cocoabbs_uc_members`
-            ON `bbs_reply_vote`.`userid` = `cocoabbs_uc_members`.`uid`
-            WHERE `replyid` = $replyid AND `vote` = 0
-            LIMIT 0,3;";
-    $result = $this->fetchArray($sql);
-    $data["likeusers"] = $result;
+    if ($data["likers"]=="") {
+      $data["likeusers"] = NULL;
+      return $data;
+    }
+
+    $data["likeusers"] = json_decode($data["likers"],true);
     return $data;
   }
+
+  private function likers2Likeusers($likersStr) {
+
+    $likers = explode(";", $likersStr);
+    if(count($likers)==0) 
+      return NULL;
+    
+    $likeusers = array(); 
+    foreach ($likers as $user) {
+      
+      $userinfo = array();
+      $array = explode(",", $user);
+      if(count($array)>=2) {
+        $userinfo["userid"] = $array[0];
+        $userinfo["username"] = $array[1];
+        $likeusers[] = $userinfo;
+      }
+    }
+    return $likeusers;
+  }
+
+
 
   public function vote($threadid, $userid, $vote) {
     
