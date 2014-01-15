@@ -30,11 +30,6 @@ $(document).ready(function() {
         alert("只有邮箱已经验证的用户方可投票");
         return;
       }
-      if(userid == threaduserid) {
-        
-        alert("不能给自己的帖子投票");
-        return;
-      }
       if(reputation<20) {
         
         alert("你自己的声望还没达到20，无法投票");
@@ -43,11 +38,13 @@ $(document).ready(function() {
       var voteObj = $(vote.target);
       var threadid = voteObj.attr("threadid");
       var replyid = voteObj.attr("replyid");
-      if(replyid)
-        voteReply(threadid,replyid,stat);
+      if(replyid) {
+      
+        var replyUserid = voteObj.attr("userid");
+        return voteReply(threadid,replyid,stat,userid,replyUserid);
+      }
       else
-        voteThread(threadid,stat);
-      return true;
+        return voteThread(threadid,stat,userid,threaduserid);
 	});
 
   $("#newreplyform").validate();
@@ -59,8 +56,13 @@ $(document).ready(function() {
   });
 });
 
-function voteThread(threadid,stat) {
+function voteThread(threadid, stat, userid, threaduserid) {
 
+  if(userid == threaduserid) {
+        
+    alert("不能给自己的帖子投票");
+    return;
+  }
   $.post('/thread/vote/',
       { threadid:threadid,
         vote:stat },
@@ -91,8 +93,14 @@ function voteThread(threadid,stat) {
         },"json");
 }
 
-function voteReply(threadid,replyid,stat) {
+function voteReply(threadid, replyid, stat, userid, replyUserid) {
 
+
+  if(userid == replyUserid) {
+        
+    alert("不能给自己的回复投票");
+    return;
+  }
 
   $.post('/thread/votereply/',
       { threadid:threadid,
