@@ -596,16 +596,16 @@ class ThreadModel extends baseDbModel {
     if($vote=="up") {
       
       $votenum = 0;
-      $userModel->add_reputation($replyUserid,5,"你发的回复被欣赏",$time,
+      $userModel->add_reputation($replyUserid,10,"你发的答案被欣赏",$time,
                             "reply",$replyid,$userid);
-      $userModel->add_money($replyUserid,5,"你发的回复被欣赏",$time,
+      $userModel->add_money($replyUserid,10,"你发的答案被欣赏",$time,
                             "reply",$replyid,$userid);
     }
     else {
       $votenum = 1;
-      $userModel->add_reputation($replyUserid,-2,"你发的回复被反对",$time,
+      $userModel->add_reputation($replyUserid,-2,"你发的答案被反对",$time,
                         "reply",$replyid,$userid);
-      $userModel->add_money($replyUserid,-2,"你发的回复被反对",$time,
+      $userModel->add_money($replyUserid,-2,"你发的答案被反对",$time,
                         "reply",$replyid,$userid);
     }
     $userModel->update_reputationAndMoney($replyUserid);
