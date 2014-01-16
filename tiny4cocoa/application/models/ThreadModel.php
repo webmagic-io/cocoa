@@ -124,9 +124,14 @@ class ThreadModel extends baseDbModel {
     return $result[0]["c"];
   }
   
-  public function replysById($id) {
+  public function replysById($id,$order = "id") {
     
-    $sql = "SELECT * FROM `thread_replys` where `threadid` = $id ORDER BY `id`;";
+    if($order == "like")
+      $orderCase = "ORDER BY (likecount*3 - dislikecount) DESC,id";
+    else
+      $orderCase = "ORDER BY `id`";
+
+    $sql = "SELECT * FROM `thread_replys` where `threadid` = $id $orderCase;";
     $result = $this->fetchArray($sql);
     $ret = array();
     if(count($result)==0)

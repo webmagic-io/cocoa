@@ -115,7 +115,7 @@ class QuestionController extends baseController
     }
     
     $replysCount = $threadModel->replysCountById($id);
-    $replys = $threadModel->replysById($id);
+    $replys = $threadModel->replysById($id,"like");
     if($this->userid)
       $replys = $threadModel->fillinUserReplyVote($replys, $id, $this->userid);
 
