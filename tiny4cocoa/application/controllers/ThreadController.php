@@ -118,7 +118,13 @@ class ThreadController extends baseController
       header("HTTP/1.1 301 Moved Permanently");
       header("location: /home/");
       die();
+    } else if ($thread["area"] == 1) {
+      
+      header("HTTP/1.1 301 Moved Permanently");
+      header("location: /question/show/$id/");
+      die();
     }
+
     $replysCount = $threadModel->replysCountById($id);
     $replys = $threadModel->replysById($id);
     $voteInfo = $threadModel->voteInfo($id);

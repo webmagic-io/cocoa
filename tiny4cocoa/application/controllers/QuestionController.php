@@ -112,6 +112,11 @@ class QuestionController extends baseController
       header("HTTP/1.1 301 Moved Permanently");
       header("location: /home/");
       die();
+    }else if ($thread["area"] == 0) {
+      
+      header("HTTP/1.1 301 Moved Permanently");
+      header("location: /thread/show/$id/");
+      die();
     }
     
     $replysCount = $threadModel->replysCountById($id);
