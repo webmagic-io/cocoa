@@ -57,6 +57,8 @@ class UserController extends baseController
   
   public function showAction() {
     
+    header('Pragma: ');
+    header ("cache-control: s-maxage=600");
     $id = $this->intVal(3);
     if($id==0) {
       header ('HTTP/1.1 301 Moved Permanently');

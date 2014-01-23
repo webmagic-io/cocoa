@@ -107,7 +107,11 @@ class ThreadController extends baseController
         }
     }
     
+    header('Pragma: ');
+    header ("cache-control: s-maxage=600");
+
     $thread = $threadModel->threadById($id);
+
     if(!$thread || $thread["del"]==1){
       
       header("HTTP/1.1 301 Moved Permanently");

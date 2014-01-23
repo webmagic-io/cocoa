@@ -269,4 +269,23 @@ EOD;
     $content = join("</p>",$parts);
     return $content;
   }
+
+  public function etagCacheByLastUpdatetime($time) {
+
+    $etag = md5($time);
+    $lastmod = gmdate('D, d M Y H:i:s \G\M\T', $time);
+    header('Cache-Control: private');
+    $ifmod = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? $_SERVER['HTTP_IF_MODIFIED_SINCE'] == $lastmod : null; 
+    $iftag = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? $_SERVER['HTTP_IF_NONE_MATCH'] == $etag : null; 
+
+    if (($ifmod || $iftag) && ($ifmod !== false && $iftag !== false)) { 
+      header('Not Modified',true,304);
+      die();
+    } else {
+      header("Last-Modified: $lastmod"); 
+      header("ETag: $etag");
+    }
+
+  }
+
 }

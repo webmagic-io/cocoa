@@ -10,6 +10,9 @@ class HomeController extends baseController
   
   public function indexAction() {
     
+    header('Pragma: ');
+    header ("cache-control: s-maxage=600");
+
     $allModel = new AllModel();
     $newsModel = new NewsModel();
     $page = $this->intVal(3);

@@ -9,7 +9,9 @@ class StatController extends baseController
  
   public function indexAction() {
     
-    
+    header('Pragma: ');
+    header ("cache-control: s-maxage=600");
+
     $statModel = new StatModel();
     
     $day = 10;

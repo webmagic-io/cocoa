@@ -148,6 +148,10 @@ class AppleController extends baseController
   
   public function nAction(){
     
+
+    header('Pragma: ');
+    header ("cache-control: s-maxage=6000");
+
     $id = $this->intVal(3);
     $newscenter = new NewscenterModel();
     $news = $newscenter->data($id);
