@@ -18,6 +18,18 @@ var isEmailValidated;
 {/if}
 $(document).ready(function() {
   
+  if(reputation>20) {
+  
+    var afterconetentad = $(".afterconetentad");
+    var reputationRight = $('<div style="text-align:center;"><p>您的声望超过20，享受特权，自动移除贴后广告。</p><p></p></div>');
+    reputationRight.insertAfter(afterconetentad);
+    afterconetentad.hide();
+  }else if(userid>0){
+
+    var afterconetentad = $(".afterconetentad");
+    var reputationRight = $('<div style="text-align:center;"><p>声望超过20后，系统将自动帮你移除贴后广告。</p><p></p></div>');
+    reputationRight.insertAfter(afterconetentad);
+  }
   $(".jsvote").jsvote()
     .bind("votechange",function(vote,stat,oldStat){
       
@@ -176,7 +188,7 @@ function sendweibo() {
     </div>
 
 
-    <div style="text-align:center;">
+    <div style="text-align:center;" class="afterconetentad">
       
       <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       <!-- tiny4cocoa贴后(自适应) -->
@@ -293,6 +305,18 @@ function sendweibo() {
       </div>
     </div>
     
+    
+    <div class="siderbar-unit">
+      <strong>置顶</strong>
+      {foreach from=$toplist item=link}
+  	  <div class="newsblock">
+        <a href="{$link.link}">
+          {$link.title}
+        </a>
+      </div>
+      {/foreach}
+    </div>
+    
     <div class="siderbar-unit">
 
       <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -307,18 +331,7 @@ function sendweibo() {
       </script>
 
     </div>
-    
-    <div class="siderbar-unit">
-      <strong>置顶</strong>
-      {foreach from=$toplist item=link}
-  	  <div class="newsblock">
-        <a href="{$link.link}">
-          {$link.title}
-        </a>
-      </div>
-      {/foreach}
-    </div>
-    
+
     <div class="siderbar-unit">
       最新帖子
       <div class="threadblock">
