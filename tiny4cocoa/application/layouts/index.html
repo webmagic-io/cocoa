@@ -126,6 +126,11 @@ window.google_analytics_uacct = "UA-53077-22";
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-53077-22']);
     _gaq.push(['_trackPageview']);
+  {/literal}
+  {if $userid}
+    _gaq.push(['_setCustomVar', 1, 'userid', {$userid}, 1 ]);
+  {/if}
+  {literal}
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
       ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
