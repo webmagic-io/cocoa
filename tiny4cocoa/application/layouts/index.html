@@ -129,8 +129,7 @@ window.google_analytics_uacct = "UA-53077-22";
   {/literal}
   {if $userid}
     _gaq.push(['_setCustomVar', 1, 'userid', {$userid}, 1 ]);
-  {else}
-    _gaq.push(['_setCustomVar', 1, 'userid', 0 , 1 ]);
+    _gaq.push(['_setCustomVar', 2, 'username', {$username}, 1 ]);
   {/if}
   {literal}
     (function() {
