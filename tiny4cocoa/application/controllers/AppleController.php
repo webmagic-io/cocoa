@@ -152,6 +152,8 @@ class AppleController extends baseController
     header('Pragma: ');
     header ("cache-control: s-maxage=6000");
 
+    $cacheModel = new FilecacheModel();
+
     $id = $this->intVal(3);
     $newscenter = new NewscenterModel();
     $news = $newscenter->data($id);
@@ -159,29 +161,47 @@ class AppleController extends baseController
     $news["content"] = stripslashes($news["content"]);
     $news["content"] = $newscenter->removeTail($news["content"]);
     $news["content"] = ToolModel::addInCententAd($news["content"]);
-    $applenews = $newscenter->news(1,10,"apple");
-    $napplenews = array();
-    foreach($applenews as $item) {
-      
-      $item["time"] = ToolModel::countTime($item["pubdate"]);
-      $item["elink"] = urlencode($item["link"]);
-      
-      $napplenews[] = $item;
+
+
+    $applenews = $cacheModel->getCache("applenews","home");
+    if(!$applenews) {
+      $applenews = $newscenter->news(1,36,"apple");
+      $napplenews = array();
+      foreach($applenews as $item) {
+        
+        $item["time"] = ToolModel::countTime($item["pubdate"]);
+        $item["elink"] = urlencode($item["link"]);
+        
+        $napplenews[] = $item;
+      }
+      $applenews = $napplenews;
+      $cacheModel->createCache("applenews","home",$applenews);
     }
-    $applenews = $napplenews;
-    
+    $this->_mainContent->assign("applenews",array_slice($applenews,0,10));
+
+
     $threadModel = new ThreadModel();
-    $threads = $threadModel->threads(1,10);
+    $newthreads = $cacheModel->getCache("newthreads","newthreads");
+    if(!$newthreads){
+
+      $newthreads = $threadModel->threads(1,20);
+      $cacheModel->createCache("newthreads","newthreads",$newthreads);
+    }
+    $this->_mainContent->assign("threads",$newthreads);
+
     
+    $toplist = $cacheModel->getCache("toplist","toplist");
+    if(!$toplist) {
     
-    $toplistModel = new ToplistModel();
-    $toplist = $toplistModel->toplist();
+      $toplistModel = new ToplistModel();
+      $toplist = $toplistModel->toplist();
+      $cacheModel->createCache("toplist","toplist",$toplist);
+    }
     $this->_mainContent->assign("toplist",$toplist);
+
     
     $this->setTitle($news["title"]);
     $this->_mainContent->assign("news",$news);
-    $this->_mainContent->assign("applenews",$applenews);
-    $this->_mainContent->assign("threads",$threads);
   
     $this->display();
   }
