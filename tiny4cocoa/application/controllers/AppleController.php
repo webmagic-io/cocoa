@@ -160,7 +160,7 @@ class AppleController extends baseController
     $news["content"] = str_replace("\\n"," ",$news["content"]);
     $news["content"] = stripslashes($news["content"]);
     $news["content"] = $newscenter->removeTail($news["content"]);
-    $news["content"] = ToolModel::addInCententAd($news["content"]);
+    //$news["content"] = ToolModel::addInCententAd($news["content"]);
 
 
     $applenews = $cacheModel->getCache("applenews","home");
