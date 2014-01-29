@@ -110,6 +110,7 @@ class ThreadController extends baseController
     header('Pragma: ');
     header ("cache-control: s-maxage=600");
 
+    $cacheModel = new FilecacheModel();
     $thread = $threadModel->threadById($id);
 
     if(!$thread || $thread["del"]==1){
@@ -120,11 +121,9 @@ class ThreadController extends baseController
     }
     $replysCount = $threadModel->replysCountById($id);
     $replys = $threadModel->replysById($id);
-    $threads = $threadModel->threads(1,20);
     $voteInfo = $threadModel->voteInfo($id);
     $userVote = $threadModel->userVote($id,$this->userid);
       
-    $this->_mainContent->assign("threads",$threads);
     
     if(!$this->userid)
       $this->_mainContent->assign("userid",0);
@@ -147,10 +146,25 @@ class ThreadController extends baseController
     $this->_mainContent->assign("voteInfo",$voteInfo);
     $this->_mainContent->assign("userVote",$userVote);
     
-    $toplistModel = new ToplistModel();
-    $toplist = $toplistModel->toplist();
 
+    $newthreads = $cacheModel->getCache("newthreads","newthreads");
+    if(!$newthreads){
+
+      $newthreads = $threadModel->threads(1,20);
+      $cacheModel->createCache("newthreads","newthreads",$newthreads);
+    }
+    $this->_mainContent->assign("threads",$newthreads);
+
+    $toplist = $cacheModel->getCache("toplist","toplist");
+    if(!$toplist) {
+    
+      $toplistModel = new ToplistModel();
+      $toplist = $toplistModel->toplist();
+      $cacheModel->createCache("toplist","toplist",$toplist);
+    }
     $this->_mainContent->assign("toplist",$toplist);
+    
+
     $this->_mainContent->assign("isEmailValidated",$this->isEmailValidated);
     $this->_mainContent->assign("reputation",$reputation);
   
