@@ -64,13 +64,23 @@ class UserController extends baseController
       header ('HTTP/1.1 301 Moved Permanently');
       header("location:/user/show/0/");
     }
+
+
     $userModel = new UserModel();
     $threadModel = new ThreadModel();
-    $userinfo = $userModel->userInfo($id);
-    $userinfo["image"] = DiscuzModel::get_avatar($id,"middle");
-    $userinfo["threadscreate"] = $threadModel->threadsByUserid($id);
-    $userinfo["threadsreply"] = $threadModel->threadsReplyByUserid($id);
+    $cacheModel = new FilecacheModel();
+
+    $userinfo = $cacheModel->getCache("userinfo","$id");
+    if(!$userinfo) {
+      
+      $userinfo = $userModel->userInfo($id);
+      $userinfo["image"] = DiscuzModel::get_avatar($id,"middle");
+      $userinfo["threadscreate"] = $threadModel->threadsByUserid($id);
+      $userinfo["threadsreply"] = $threadModel->threadsReplyByUserid($id);
+      $cacheModel->createCache("userinfo","$id",$userinfo);
+    }
     $this->_mainContent->assign("user",$userinfo);
+  
     $this->display();
   }
   
