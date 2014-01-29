@@ -20,26 +20,27 @@ class HomeController extends baseController
       $page=1;
     $size = 30;
     
+    $cacheModel = new FilecacheModel();
     $newscenter = new NewscenterModel();
+
     $count = $newscenter->count("apple");
     $newscount = $newscenter->count("unmarked");
     $spamcount = $newsModel->spamCount();
-    $applenews = $newscenter->news(1,36,"apple");
-    $napplenews = array();
-    foreach($applenews as $item) {
-      
-      $item["time"] = ToolModel::countTime($item["pubdate"]);
-      $item["elink"] = urlencode($item["link"]);
-      
-      $napplenews[] = $item;
+
+    $applenews = $cacheModel->getCache("applenews","home");
+    if(!$applenews) {
+      $applenews = $newscenter->news(1,36,"apple");
+      $napplenews = array();
+      foreach($applenews as $item) {
+        
+        $item["time"] = ToolModel::countTime($item["pubdate"]);
+        $item["elink"] = urlencode($item["link"]);
+        
+        $napplenews[] = $item;
+      }
+      $applenews = $napplenews;
+      $cacheModel->createCache("applenews","home",$applenews);
     }
-    
-    $applenews = $napplenews;
-    
-    $size = 21;
-    $count = $newsModel->newsCount();
-    $news = $newsModel->news(1,$size);
-		$pageControl = ToolModel::pageControl($page,$count,$size,"<a href='/home/news/#page#/'>");
     
     $thread = new ThreadModel();
     $threadCount = $thread->threadCount();
@@ -47,14 +48,16 @@ class HomeController extends baseController
     $threads = $thread->threads(1,$threadPageSize);
 		$pageControl = ToolModel::pageControl(1,$threadCount,$threadPageSize,"<a href='/thread/index/#page#/'>",0);
     
-    $toplistModel = new ToplistModel();
-    $toplist = $toplistModel->toplist();
-    $this->_mainContent->assign("toplist",$toplist);
-    
-    $threadModel = new ThreadModel();
-    $userModel = new UserModel();
-    $users = $userModel->users(1,10);
+
+    $users = $cacheModel->getCache("topusers","home");
+    if (!$users) {
+
+      $userModel = new UserModel();
+      $users = $userModel->users(1,10);
+      $cacheModel->createCache("topusers","home",$users);
+    }
     $this->_mainContent->assign("users",$users);
+
     
     $this->_mainContent->assign("pageControl",$pageControl);
     $this->_mainContent->assign("threads",$threads);
