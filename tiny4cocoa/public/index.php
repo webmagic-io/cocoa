@@ -1,4 +1,5 @@
 <?php
+	error_reporting(E_ALL);
   putenv("TZ=Asia/Shanghai");
   date_default_timezone_set("Asia/Shanghai");
 
