@@ -26,21 +26,6 @@ class HomeController extends baseController
     $count = $newscenter->count("apple");
     $newscount = $newscenter->count("unmarked");
     $spamcount = $newsModel->spamCount();
-
-    $applenews = $cacheModel->getCache("applenews","home");
-    if(!$applenews) {
-      $applenews = $newscenter->news(1,36,"apple");
-      $napplenews = array();
-      foreach($applenews as $item) {
-        
-        $item["time"] = ToolModel::countTime($item["pubdate"]);
-        $item["elink"] = urlencode($item["link"]);
-        
-        $napplenews[] = $item;
-      }
-      $applenews = $napplenews;
-      $cacheModel->createCache("applenews","home",$applenews);
-    }
     
     $thread = new ThreadModel();
     $threadCount = $thread->threadCount();
@@ -62,7 +47,6 @@ class HomeController extends baseController
     $this->_mainContent->assign("pageControl",$pageControl);
     $this->_mainContent->assign("threads",$threads);
     $this->_mainContent->assign("news",$news);
-    $this->_mainContent->assign("applenews",$applenews);
     $this->_mainContent->assign("userid",$this->userid);
     $this->_mainContent->assign("spamcount",$spamcount);
     $this->_mainContent->assign("newscount",$newscount);
