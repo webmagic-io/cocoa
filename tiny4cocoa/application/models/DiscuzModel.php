@@ -202,7 +202,7 @@ class DiscuzModel {
   	$dir3 = substr($uid, 5, 2);
   	$typeadd = $type == 'real' ? '_real' : '';
   	$avpath = $dir1.'/'.$dir2.'/'.$dir3.'/'.substr($uid, -2).$typeadd."_avatar_$size.jpg";
-  	if(file_exists("/var/www/cocoa/uc_server/data/avatar/" . $avpath))
+  	if(file_exists("/var/www/ourcoders/uc_server/data/avatar/" . $avpath))
   		$ret = "/uc_server/data/avatar/" . $avpath;
   	else
   		$ret =  "/uc_server/images/noavatar_$size.gif";
