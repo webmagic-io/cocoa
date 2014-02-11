@@ -189,7 +189,7 @@ class DiscuzModel {
   	$dir3 = substr($uid, 5, 2);
     // $typeadd = $type == 'real' ? '_real' : '';
   	$avpath = $dir1.'/'.$dir2.'/'.$dir3.'/'.substr($uid, -2).$typeadd."_avatar_$size.jpg";
-    $pathadd = "/var/www/cocoa/uc_server/data/avatar/";
+    $pathadd = "/var/www/ourcoders/uc_server/data/avatar/";
     return $pathadd.$avpath;
   }
   public static function get_avatar($uid, $size = 'middle', $type = '') {
