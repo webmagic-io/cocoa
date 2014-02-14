@@ -8,20 +8,6 @@
    }
 </style>
 <div class="row">
-  <div>
-    {if $userid==2}
-      <p class="pull-right">
-      <a href="/homeadmin/comments">
-        Spam回复{$spamcount}个
-      </a>, 
-      <a href="/homeadmin/applenews/unmarked/">
-        未检查新闻{$newscount}条
-      </a>。
-    </p>
-  {/if}
-  <div class="clearfix"></div>
-</div>
-
 
 <div class="span7">
   <div class="content-unit">
@@ -83,27 +69,6 @@
       {/foreach}
       <div class="clearfix"></div>
     </div>
-  </div>
-  <div class="siderbar-unit">
-    <strong>苹果新闻</strong>
-    {foreach from=$applenews item=item}
-	  <div class="newsblock">
-      {if $item.image}
-        <img src="{$item.image}" width="40" style="float:left;">
-      {/if}
-      <div style="margin-left:50px;">
-      <a href="/apple/n/{$item.id}/">
-        {$item.title}
-      </a>
-      <div style="text-align:right;">
-        <small class="muted">
-          by {$item.name} 发布于{$item.time}
-        </small>
-      </div>
-    </div>
-    </div>
-    {/foreach}
-    <p class="threadfootnote"><a href="/apple/">查看更多</a></p>
   </div>
 </div>
 

@@ -119,13 +119,16 @@ class baseDbModel extends dbConnModel {
 		
     if($debug==1)
       var_dump($sql);
-		$result=mysql_query($sql);
-		if(!$result)
-			return null;
-		while ($row = mysql_fetch_assoc($result)) {
-			$ret[]=$row;
-		}
-		return $ret;
+
+    $result=mysql_query($sql);
+	if(!$result)
+		return null;
+	
+	$ret = array();
+	while ($row = mysql_fetch_assoc($result)) {
+		$ret[]=$row;
+	}
+	return $ret;
 	}
 	
 	//插入一个记录

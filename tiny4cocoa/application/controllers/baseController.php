@@ -101,7 +101,7 @@
 				$mainContent=$this->_mainContent->fetch($this->viewFile);
 				$this->_view->assign('mainContent',$mainContent);
 			}
-			if($_SESSION['id']) {
+			if(isset($_SESSION['id'])) {
 			  $notify = new NotificationModel();
 			  $notifyCount = $notify->unreadCount($_SESSION['id']);
 			  $this->_view->assign("notifyCount",$notifyCount);

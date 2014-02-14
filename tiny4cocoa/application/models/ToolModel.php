@@ -75,7 +75,7 @@ class ToolModel {
     return $content;
   }
   
-  public function countTime($time)
+  public static function countTime($time)
   {
     $diff = time() - $time;
     if($diff<0) {
@@ -167,7 +167,7 @@ class ToolModel {
   }
   
   
-  function is_iPhone() {
+  public static function is_iPhone() {
 
     $iPhone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
     $iPod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
@@ -179,7 +179,7 @@ class ToolModel {
   }
   
   
-  function youkuInsert($html) {
+  public static function youkuInsert($html) {
     
     if(ToolModel::is_iPhone()) {
       $width="200";
@@ -194,14 +194,14 @@ class ToolModel {
     return $html;
   }
   
-  function makeDeepDir($path) {
+  public static function makeDeepDir($path) {
     
     if(file_exists($path))
       return;
     system("mkdir -p $path");
   }
   
-  function autoDetect($html) {
+  public static function autoDetect($html) {
 
     //检测用户名提及
     $html = preg_replace("/\@([^\\s\\n\\r<>\/\'\"@]*)/","@<a href='/user/name/\\1/' target='_blank'>\\1</a>",$html);
@@ -210,7 +210,7 @@ class ToolModel {
     return $html;
   }
   
-  public function detectAtUsers($content) {
+  public static function detectAtUsers($content) {
     
     preg_match_all("/\@([^\\s\\n\\r<>\/\'\"@]*)/",$content,$match);
     $user = array();

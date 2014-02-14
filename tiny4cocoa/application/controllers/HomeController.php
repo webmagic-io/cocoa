@@ -14,18 +14,12 @@ class HomeController extends baseController
     header ("cache-control: s-maxage=600");
 
     $allModel = new AllModel();
-    $newsModel = new NewsModel();
     $page = $this->intVal(3);
     if($page==0)
       $page=1;
     $size = 30;
     
     $cacheModel = new FilecacheModel();
-    $newscenter = new NewscenterModel();
-
-    $count = $newscenter->count("apple");
-    $newscount = $newscenter->count("unmarked");
-    $spamcount = $newsModel->spamCount();
     
     $thread = new ThreadModel();
     $threadCount = $thread->threadCount();
@@ -43,13 +37,10 @@ class HomeController extends baseController
     }
     $this->_mainContent->assign("users",$users);
 
-    
     $this->_mainContent->assign("pageControl",$pageControl);
     $this->_mainContent->assign("threads",$threads);
-    $this->_mainContent->assign("news",$news);
     $this->_mainContent->assign("userid",$this->userid);
-    $this->_mainContent->assign("spamcount",$spamcount);
-    $this->_mainContent->assign("newscount",$newscount);
+
     
     $this->viewFile="Home/index.html";
     if($page>1)

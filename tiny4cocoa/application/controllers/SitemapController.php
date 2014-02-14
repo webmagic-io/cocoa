@@ -6,13 +6,7 @@ class SitemapController extends baseController
     parent::__construct($pathinfo,$controller);
     $this->size = 4500;
   }
-  // homenews
-  // applenews
-  // threads
-  // faqs
-  // faqtags
-  // users
- 
+
   public function homenewsAction() {
     
     $db = new SitemapModel();
