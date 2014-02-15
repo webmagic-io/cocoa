@@ -13,40 +13,7 @@ class SitemapController extends baseController
     $homenews = $db->select("cocoacms_news")->fetchAll();
     foreach($homenews as $news){
       
-      echo "http://tiny4cocoa.com/home/s/$news[id]/\r\n";
-    }
-  }
-  
-  public function applenews_indexAction() {
-    
-    $db = new SitemapModel();
-    $ret = $db->select("newscenter_items")->fields("count(*) as c")->fetchOne();
-    $count = $ret["c"];
-    $len = ceil($count/$this->size);
-    echo '<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-    for($i=0;$i<$len;$i++) {
-      
-      $j=$i+1;
-      echo "<sitemap><loc>http://tiny4cocoa.com/sitemap/applenews/$j/</loc></sitemap>";
-    }
-    echo "</sitemapindex>";
-  }
-  
-  public function applenewsAction() {
-    
-    $page = $this->intVal(3);
-    if($page==0)
-      $page=1;
-    $size = $this->size;
-    $start = ($page-1)*$size;
-    
-    $db = new SitemapModel();
-    $homenews = $db->select("newscenter_items")->limit("$start,$size")->fetchAll();
-    if(count($homenews)>0)
-    foreach($homenews as $news){
-      
-      echo "http://tiny4cocoa.com/apple/n/$news[id]/\r\n";
+      echo "/home/s/$news[id]/\r\n";
     }
   }
   
@@ -56,7 +23,7 @@ class SitemapController extends baseController
     $homenews = $db->select("threads")->fetchAll();
     foreach($homenews as $news){
       
-      echo "http://tiny4cocoa.com/thread/show/$news[id]/\r\n";
+      echo "/thread/show/$news[id]/\r\n";
     }
   }
 
@@ -66,7 +33,7 @@ class SitemapController extends baseController
     $homenews = $db->select("cocoabbs_threads")->fetchAll();
     foreach($homenews as $news){
       
-      echo "http://tiny4cocoa.com/faq/show/$news[tid]/\r\n";
+      echo "/faq/show/$news[tid]/\r\n";
     }
   }
   
@@ -77,7 +44,7 @@ class SitemapController extends baseController
     foreach($homenews as $news){
       
       $tagname = urlencode($news["tagname"]);
-      echo "http://tiny4cocoa.com/faq/tag/$tagname/\r\n";
+      echo "/faq/tag/$tagname/\r\n";
     }
   }
   
@@ -92,7 +59,7 @@ class SitemapController extends baseController
     for($i=0;$i<$len;$i++) {
       
       $j=$i+1;
-      echo "<sitemap><loc>http://tiny4cocoa.com/sitemap/users/$j/</loc></sitemap>";
+      echo "<sitemap><loc>/sitemap/users/$j/</loc></sitemap>";
     }
     echo "</sitemapindex>";
   }
@@ -111,7 +78,7 @@ class SitemapController extends baseController
     foreach($homenews as $news){
       
       $username = urlencode($news["username"]);
-      echo "http://tiny4cocoa.com/user/show/$news[uid]/$username/\r\n";
+      echo "/user/show/$news[uid]/$username/\r\n";
     }
   }
   
