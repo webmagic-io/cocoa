@@ -13,7 +13,7 @@ class SitemapController extends baseController
     $homenews = $db->select("cocoacms_news")->fetchAll();
     foreach($homenews as $news){
       
-      echo "/home/s/$news[id]/\r\n";
+      echo "http://ourcoders.com/home/s/$news[id]/\r\n";
     }
   }
   
@@ -23,28 +23,7 @@ class SitemapController extends baseController
     $homenews = $db->select("threads")->fetchAll();
     foreach($homenews as $news){
       
-      echo "/thread/show/$news[id]/\r\n";
-    }
-  }
-
-  public function faqsAction() {
-    
-    $db = new SitemapModel();
-    $homenews = $db->select("cocoabbs_threads")->fetchAll();
-    foreach($homenews as $news){
-      
-      echo "/faq/show/$news[tid]/\r\n";
-    }
-  }
-  
-  public function faqtagsAction() {
-    
-    $db = new SitemapModel();
-    $homenews = $db->select("cocoabbs_tags")->fetchAll();
-    foreach($homenews as $news){
-      
-      $tagname = urlencode($news["tagname"]);
-      echo "/faq/tag/$tagname/\r\n";
+      echo "http://ourcoders.com/thread/show/$news[id]/\r\n";
     }
   }
   
@@ -59,7 +38,7 @@ class SitemapController extends baseController
     for($i=0;$i<$len;$i++) {
       
       $j=$i+1;
-      echo "<sitemap><loc>/sitemap/users/$j/</loc></sitemap>";
+      echo "<sitemap><loc>http://ourcoders.com/sitemap/users/$j/</loc></sitemap>";
     }
     echo "</sitemapindex>";
   }
@@ -78,7 +57,7 @@ class SitemapController extends baseController
     foreach($homenews as $news){
       
       $username = urlencode($news["username"]);
-      echo "/user/show/$news[uid]/$username/\r\n";
+      echo "http://ourcoders.com/user/show/$news[uid]/$username/\r\n";
     }
   }
   
