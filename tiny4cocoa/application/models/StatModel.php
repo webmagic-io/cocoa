@@ -152,7 +152,9 @@ GROUP BY `adate`;";
     $i = 0;
     foreach($ret as $record) {
       $indexs[] = $i;
-      $days[] = $record["regd"];
+      if (isset($record["regd"])) {
+        $days[] = $record["regd"];
+      }
       $counts[] = $record["c"];
       $jsdata[] = '["' . $record["hour"] . '",' . $record["c"] . ']';
       $i++;
@@ -206,7 +208,9 @@ GROUP BY `adate`;";
     $i = 0;
     foreach($ret as $record) {
       $indexs[] = $i;
-      $days[] = $record["regd"];
+      if (isset($record["regd"])) {
+        $days[] = $record["regd"];
+      }
       $counts[] = $record["c"];
       $jsdata[] = '["' . $record["hour"] . '",' . $record["c"] . ']';
       $i++;
