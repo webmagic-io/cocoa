@@ -123,7 +123,23 @@ class ThreadController extends baseController
     $replys = $threadModel->replysById($id);
     $voteInfo = $threadModel->voteInfo($id);
     $userVote = $threadModel->userVote($id,$this->userid);
+
+    //experiment
+    $isBot = ToolModel::isBot();
+    if($this->userid == 0 && !$isBot && $replysCount>10) {
+
+      if(rand(0,1)==0) {
       
+        $experiment001 = "origin";
+      }
+      else {
+        
+        $experiment001 = "limit10replys";
+        $replys = array_slice($replys,0,10);
+      }
+      $this->_view->assign("experiment001",$experiment001);
+      $this->_mainContent->assign("experiment001",$experiment001);
+    } 
     
     if(!$this->userid)
       $this->_mainContent->assign("userid",0);
@@ -164,8 +180,9 @@ class ThreadController extends baseController
     }
     $this->_mainContent->assign("toplist",$toplist);
     
-
-    $this->_mainContent->assign("isEmailValidated",$this->isEmailValidated);
+    if(isset($this->isEmailValidated))
+      $this->_mainContent->assign("isEmailValidated",$this->isEmailValidated);
+  
     $this->_mainContent->assign("reputation",$reputation);
   
     $this->setTitle($thread["title"]);

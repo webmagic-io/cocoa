@@ -130,10 +130,16 @@ window.google_analytics_uacct = "UA-53077-22";
     _gaq.push(['_setAccount', 'UA-53077-22']);
     _gaq.push(['_trackPageview']);
   {/literal}
-  {if $userid}
-    _gaq.push(['_setCustomVar', 1, 'userid', {$userid}, 1 ]);
+  
+  {if isset($userid)}
+    // _gaq.push(['_setCustomVar', 1, 'userid', {$userid}, 1 ]);
     _gaq.push(['_setCustomVar', 1, 'username', "{$username}", 1 ]);
   {/if}
+
+  {if isset($experiment001)}
+    _gaq.push(['_setCustomVar', 1, 'experiment001', "{$experiment001}", 1 ]);
+  {/if}
+
   {literal}
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

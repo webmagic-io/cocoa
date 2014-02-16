@@ -288,4 +288,16 @@ EOD;
 
   }
 
+  public static function isBot() {
+
+    $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+    if(
+      strpos($agent,"bot")||
+      strpos($agent,"spider") ) {
+
+      return true;
+    }
+    return false;
+  }
+
 }
