@@ -74,17 +74,22 @@ class baseController extends tinyApp_Controller
 	        $alerttype[] = "";
 				  $toplink["alert"] = $alerttype[rand(0,2)];
 	      }
-	      $this->_view->assign("toplink",$toplink);
-				$this->_view->assign("userid",$this->userid);
-				$this->_view->assign("username",$this->username);
-				$this->_view->assign("isEmailValidated",$this->isEmailValidated);
-				$this->_view->assign("userinfo",$userinfo);
+		$this->_view->assign("toplink",$toplink);
+		$this->_view->assign("userid",$this->userid);
+		$this->_view->assign("username",$this->username);
 
-				$iPhone = ToolModel::is_iPhone();
-				$this->_view->assign("iPhone",$iPhone);
-				$this->_mainContent->assign("userid",$this->userid);
-				$this->_mainContent->assign("iPhone",$iPhone);
-			}
+		if (isset($this->isEmailValidated))
+			$this->_view->assign("isEmailValidated",$this->isEmailValidated);
+
+		if (isset($userinfo))
+			$this->_view->assign("userinfo",$userinfo);
+				
+
+			$iPhone = ToolModel::is_iPhone();
+			$this->_view->assign("iPhone",$iPhone);
+			$this->_mainContent->assign("userid",$this->userid);
+			$this->_mainContent->assign("iPhone",$iPhone);
+		}
 			
 			public function display($viewfile="") 
 			{

@@ -242,14 +242,14 @@ class UserModel extends baseDbModel {
   public function checklogin() {
     
     
-    if($_SESSION["username"] && $_SESSION["userid"]) {
+    if(isset($_SESSION["username"]) && isset($_SESSION["userid"])) {
       
       $this->renewCookie();
       return $_SESSION["userid"];
     } else {
       
       $this->cookie2Session();
-      if($_SESSION["userid"]){
+      if(isset($_SESSION["userid"])){
         
         $this->updateLoginToDb($_SESSION["userid"]);
         return $_SESSION["userid"];
@@ -266,7 +266,7 @@ class UserModel extends baseDbModel {
   }
   private function cookie2Session() {
     
-    if(!$_COOKIE["TINY4COCOA_USERID"])
+    if(!isset($_COOKIE["TINY4COCOA_USERID"])) 
       return;
     $userid = $_COOKIE["TINY4COCOA_USERID"];
     $sql = "SELECT `uid`,`username`,`salt` 
