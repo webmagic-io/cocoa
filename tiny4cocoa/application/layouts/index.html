@@ -82,7 +82,7 @@ window.google_analytics_uacct = "UA-53077-22";
     </div>
   </div>
   <div class="container">
-    {if !$isEmailValidated && $userid}
+    {if !isset($isEmailValidated) && isset($userid)}
     <div class="alert alert-warning">
      您的注册邮箱还没有通过验证，不能发帖和回帖。
      请检查您的注册邮箱里面是否有注册验证邮件。
