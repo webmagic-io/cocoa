@@ -25,7 +25,7 @@
   include_once( $TA_PathInfo['tinyAppLib'] . '/libweibo/saetv2.ex.class.php' );
   
   define( "WB_AKEY" , '3660403637' );
-  define( "WB_SKEY" , '54aa1d85dfd29eaf36f49a96534a11e0' );
+  define( "WB_SKEY" , '9d1db8fbf1d36120c55414d86d2dee4d' );
   define( "WB_CALLBACK_URL" , 'http://ourcoders.com/user/weibocallback/');
   
   define('MAGPIE_CACHE_AGE',60*33);
