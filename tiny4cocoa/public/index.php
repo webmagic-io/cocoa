@@ -1,5 +1,5 @@
 <?php
-	error_reporting(E_ALL);
+  error_reporting(E_ALL);
   putenv("TZ=Asia/Shanghai");
   date_default_timezone_set("Asia/Shanghai");
 
@@ -25,9 +25,9 @@
 	require_once $TA_PathInfo['tinyAppLib'] . "/markdown/markdown.php";
   include_once( $TA_PathInfo['tinyAppLib'] . '/libweibo/saetv2.ex.class.php' );
   
-  define( "WB_AKEY" , '453615702' );
-  define( "WB_SKEY" , '16349e40f21569d2c0bc9ed777fd2dfb' );
-  define( "WB_CALLBACK_URL" , 'http://tiny4cocoa.com/user/weibocallback/');
+  define( "WB_AKEY" , '3660403637' );
+  define( "WB_SKEY" , '54aa1d85dfd29eaf36f49a96534a11e0' );
+  define( "WB_CALLBACK_URL" , 'http://ourcoders.com/user/weibocallback/');
   
   define('MAGPIE_CACHE_AGE',60*33);
   define('MAGPIE_CACHE_DIR',"../rsscache");
