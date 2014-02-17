@@ -368,21 +368,14 @@ class UserController extends baseController
     
     error_reporting(E_ALL);
     $o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
-    var_dump($o);
-    var_dump($_REQUEST['code']);
     if (isset($_REQUEST['code'])) {
     	$keys = array();
     	$keys['code'] = $_REQUEST['code'];
     	$keys['redirect_uri'] = WB_CALLBACK_URL;
-      var_dump($keys);
     	try {
-        var_dump(1111);
     		$token = $o->getAccessToken('code',$keys);
-        var_dump(222);
-
-        var_dump($token);
     	} catch (OAuthException $e) {
-        var_dump($e);
+        print_r($e);
     	}
     }
     var_dump($token);
