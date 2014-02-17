@@ -366,7 +366,6 @@ class UserController extends baseController
     
   public function weibocallbackAction() {
     
-    error_reporting(E_ALL);
     $o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
     if (isset($_REQUEST['code'])) {
     	$keys = array();
@@ -378,7 +377,6 @@ class UserController extends baseController
         print_r($e);
     	}
     }
-    var_dump($token);
     if ($token) {
       $weiboModel = new WeiboModel();
       $weiboModel->setToken($token["access_token"]);
