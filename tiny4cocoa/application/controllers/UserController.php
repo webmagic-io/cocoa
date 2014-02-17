@@ -375,6 +375,7 @@ class UserController extends baseController
     	try {
     		$token = $o->getAccessToken( 'code', $keys ) ;
     	} catch (OAuthException $e) {
+        var_dump($e);
     	}
     }
     var_dump($token);
