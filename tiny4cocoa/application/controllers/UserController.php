@@ -367,6 +367,7 @@ class UserController extends baseController
   public function weibocallbackAction() {
     
     $o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+    var_dump($o);
     var_dump($_REQUEST['code']);
     if (isset($_REQUEST['code'])) {
     	$keys = array();
