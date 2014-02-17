@@ -374,6 +374,7 @@ class UserController extends baseController
     	$keys = array();
     	$keys['code'] = $_REQUEST['code'];
     	$keys['redirect_uri'] = WB_CALLBACK_URL;
+      var_dump($keys);
     	try {
     		$token = $o->getAccessToken( 'code', $keys ) ;
     	} catch (OAuthException $e) {
