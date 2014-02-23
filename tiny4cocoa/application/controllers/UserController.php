@@ -187,11 +187,19 @@ class UserController extends baseController
       if($userid>0)
         header("location: /");
       else
-        header("location: /user/login/");
+        header("location: /user/loginerror/");
       die();
     }
     $this->display();
   }
+
+    public function loginErrorAction() {
+    
+    $this->_mainContent->assign("error","1");
+    $this->viewFile="User/login.html";
+    $this->display();
+  }
+
   
   public function logoutAction() {
     

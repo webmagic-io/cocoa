@@ -4,6 +4,9 @@
     <div class="content-unit">
       <h4>登录</h4>
       <div class="threadblock" style="padding-left:30px;">
+        {if isset($error) && $error==1}
+          <div class="label label-important">用户名或者密码错误</div>
+        {/if}
         <form action="/user/login/" method="post" accept-charset="utf-8">
           <label for="name">用户名</label><input type="text" name="name" value="" id="name">
           <label for="password">密码</label><input type="password" name="password" value="" id="password">
