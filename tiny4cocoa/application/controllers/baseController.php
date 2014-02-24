@@ -14,7 +14,9 @@ class baseController extends tinyApp_Controller
 	    
 	public function __construct($pathinfo,$controller) {
 				
-		$this->sitename = "OurCoders";
+		$this->sitename = "OurCoders (我们程序员)";
+		$this->short_sitename = "OurCoders";
+
 		parent::__construct($pathinfo,$controller);
 		$this->begintime = microtime(true);
 		$this->_layout="index";
@@ -27,11 +29,12 @@ class baseController extends tinyApp_Controller
 		$title= $this->findTitle();
 		
 		$this->_view->assign("sitename",$this->sitename);
+		$this->_view->assign("short_sitename",$this->short_sitename);
 
 		if($title)
 			$this->title = "$title - $this->sitename";
 		else
-			$this->title = $this->sitename;
+			$this->title = "$this->sitename";
 		        
 					$controller=$this->_controller['name'];
 					
