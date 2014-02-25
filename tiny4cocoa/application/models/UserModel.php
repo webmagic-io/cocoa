@@ -90,14 +90,14 @@ class UserModel extends baseDbModel {
     $mailModel = new MailModel();
     $v = md5($user["username"].$user["salt"].$user["email"]);
     $page = "<p>你好，</p>
-    <p>您收到这封邮件的原因是，有人使用这个邮箱地址注册了tiny4cocoa社区 http://tiny4cocoa.com ,id为 $user[username]。如果您确定这不是您自己的行为，请删除这封邮件。</p>
+    <p>您收到这封邮件的原因是，有人使用这个邮箱地址注册了OurCoders(我们程序员)社区 http://OurCoders.com ,id为 $user[username]。如果您确定这不是您自己的行为，请删除这封邮件。</p>
     
-    <p>如果您可以确认是您自己的注册，请点击链接完成验证 <a href=http://tiny4cocoa.com/user/validate/?user=$user[uid]&v=$v>邮件验证</a></p>
+    <p>如果您可以确认是您自己的注册，请点击链接完成验证 <a href=http://ourcoders.com/user/validate/?user=$user[uid]&v=$v>邮件验证</a></p>
     ";
      $mailModel->generateMail(
             $mail,
-             "Tiny4Cocoa论坛 <tiny4cocoa@tiny4.org>", 
-            "Tiny4Cocoa社区注册确认信", 
+             "OurCoders(我们程序员) <ourcoders@tiny4.org>", 
+            "OurCoders(我们程序员)社区注册确认信", 
             $page);
     
   }
@@ -108,15 +108,15 @@ class UserModel extends baseDbModel {
     $mailModel = new MailModel();
     $v = md5($mail."3.141592654");
     $page = "<p>你好</p>
-    <p>如果你要退订Tiny4Cocoa社区的通知邮件，请点击下面的链接</p>
+    <p>如果你要退订OurCoders(我们程序员)社区的通知邮件，请点击下面的链接</p>
     
-    <p><a href=http://tiny4cocoa.com/user/unsubscribe/?mail=$mail&v=$v>退订确定</a></p>
+    <p><a href=http://OurCoders.com/user/unsubscribe/?mail=$mail&v=$v>退订确定</a></p>
      <p>如果你不想退订，或者不知道为什么会收到这封邮件，那么你可以忽略这封邮件。</p>
     ";
      $mailModel->generateMail(
             $mail,
-             "Tiny4Cocoa论坛 <tiny4cocoa@tiny4.org>", 
-            "Tiny4Cocoa社区邮件退订确认信", 
+            "OurCoders(我们程序员) <ourcoders@tiny4.org>", 
+            "OurCoders(我们程序员)社区邮件退订确认信", 
             $page);
     
   }
@@ -211,13 +211,13 @@ class UserModel extends baseDbModel {
     $mail = $userinfo["email"];
     $mailModel = new MailModel();
     $page = "<p>你好，</p>
-    <p>您收到这封邮件的原因是，有人请求重置 $username 在 tiny4cocoa社区的密码。如果您确定这不是您自己的行为，请删除这封邮件。</p>
+    <p>您收到这封邮件的原因是，有人请求重置 $username 在 OurCoders(我们程序员)社区的密码。如果您确定这不是您自己的行为，请删除这封邮件。</p>
     
-    <p>如果您可以确认是您自己的行为，请点击链接重置密码 <a href=http://tiny4cocoa.com/user/resetpassword/?ticket=$data[ticket]>重置密码</a></p>";
+    <p>如果您可以确认是您自己的行为，请点击链接重置密码 <a href=http://ourcoders.com/user/resetpassword/?ticket=$data[ticket]>重置密码</a></p>";
      $mailModel->generateMail(
             $mail,
-             "Tiny4Cocoa论坛 <tiny4cocoa@tiny4.org>", 
-            "Tiny4Cocoa社区－重置密码邮件", 
+             "OurCoders(我们程序员)社区 <ourcoders@tiny4.org>", 
+            "OurCoders(我们程序员)社区－重置密码邮件", 
             $page);
     return 1;
   }
