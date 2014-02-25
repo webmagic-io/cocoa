@@ -36,8 +36,8 @@ class CrontabController extends baseController {
       $page = $this->makePage("MailTemplate","weeksummary",$data);
       $mail->generateMail(
             $user["email"],
-             "Tiny4Cocoa论坛 <tiny4cocoa@tiny4.org>", 
-            "Tiny4Cocoa每周精选", 
+            "OurCoders(我们程序员)社区 <OurCoders@tiny4.org>", 
+            "OurCoders(我们程序员)社区每周精选", 
             $page);
     }
     echo "ok";
@@ -73,8 +73,8 @@ class CrontabController extends baseController {
       $page = $this->makePage("MailTemplate","dailysummary",$data);
       $mail->generateMail(
             $user["email"],
-             "Tiny4Cocoa论坛<tiny4cocoa@tiny4.org>", 
-            "Tiny4Cocoa每日精选", 
+            "OurCoders(我们程序员)社区 <OurCoders@tiny4.org>", 
+            "OurCoders(我们程序员)社区每日精选", 
             $page);
     }
     echo "ok";

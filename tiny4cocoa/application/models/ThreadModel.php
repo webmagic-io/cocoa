@@ -360,7 +360,7 @@ class ThreadModel extends baseDbModel {
     $mail = new MailModel();
     $mail->generateMail(
             $email,
-             "Tiny4Cocoa论坛 <tiny4cocoa@tiny4.org>", 
+             "OurCoders(我们程序员)社区 <OurCoders@tiny4.org>", 
             $subject, 
             $mailContent);
   }
