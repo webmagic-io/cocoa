@@ -8,3 +8,13 @@ function moveCaretToEnd(el) {
         range.select();
     }
 }
+
+var search = function() {
+	q = document.getElementById("google_q");
+	if (q.value != "") {
+		window.open('http://www.google.com/search?q=site:ourcoders.com%20' + q.value, "_blank");
+		return false;
+	} else {
+		return false;
+	}
+} 
