@@ -14,4 +14,15 @@ class LogModel extends baseDbModel {
     $data["date"] = time();
     $this->select("slowrequest")->insert($data);
   }
+
+  public function sitesearch($keyword) {
+
+    $data = array();
+    $data["keyword"] = $keyword;
+    $data["ip"] = ToolModel::getRealIpAddr();
+    $userModel = new UserModel();
+    $data["userid"] = $userModel->checklogin();
+    $data["time"] = time();
+    $this->select("sitesearch")->insert($data);
+  }
 }
