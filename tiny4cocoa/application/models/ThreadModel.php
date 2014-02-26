@@ -70,8 +70,11 @@ class ThreadModel extends baseDbModel {
     if(count($result)==0)
       return $ret;
     foreach($result as $item) {
-      $item["createtime"] = ToolModel::countTime($item["createdate"]);
-      $item["updatetime"] = ToolModel::countTime($item["updatedate"]);
+
+      if(isset($item["createdate"]))
+        $item["createtime"] = ToolModel::countTime($item["createdate"]);
+      if(isset($item["updatedate"]))
+        $item["updatetime"] = ToolModel::countTime($item["updatedate"]);
       $item["image"] = DiscuzModel::get_avatar($item["createbyid"],"small");
       $ret[] = $item;
     } 

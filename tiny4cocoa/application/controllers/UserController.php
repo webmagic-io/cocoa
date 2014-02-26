@@ -79,8 +79,10 @@ class UserController extends baseController
       $userinfo["threadsreply"] = $threadModel->threadsReplyByUserid($id);
       $cacheModel->createCache("userinfo","$id",$userinfo);
     }
+
     $this->_mainContent->assign("user",$userinfo);
-  
+    $this->setTitle($userinfo["username"]);
+
     $this->display();
   }
   
