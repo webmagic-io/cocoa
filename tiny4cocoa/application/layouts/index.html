@@ -147,6 +147,10 @@ window.google_analytics_uacct = "UA-53077-22";
     _gaq.push(['_setCustomVar', 1, 'experiment001', "{$experiment001}", 1 ]);
   {/if}
 
+  {if isset($experiment002)}
+    _gaq.push(['_setCustomVar', 1, 'experiment002', "{$experiment002}", 1 ]);
+  {/if}
+
   {literal}
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

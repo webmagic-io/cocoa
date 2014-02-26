@@ -35,7 +35,9 @@
           </a>
         {/if}
         <div style="margin-left:54px;">
-          <a href="/thread/show/{$item.id}/">{$item.title}</a>
+          <a href="/thread/show/{$item.id}/"
+          {if isset($experiment002) && $experiment002 == "_blank"}target="_blank"{/if}
+          >{$item.title}</a>
           <div class="muted">
             {$item.createtime} by  
             <a href="/user/show/{$item.createbyid}/{$item.createby}/" class="muted" target="_blank">{$item.createby}</a> 

@@ -41,6 +41,22 @@ class HomeController extends baseController
     $this->_mainContent->assign("threads",$threads);
     $this->_mainContent->assign("userid",$this->userid);
 
+    //experiment02
+    $isBot = ToolModel::isBot();
+    if($this->userid == 0 && !$isBot) {
+
+      if(rand(0,1)==0) {
+      
+        $experiment002 = "origin";
+      }
+      else {
+        
+        $experiment002 = "_blank";
+      }
+      $this->_view->assign("experiment002",$experiment002);
+      $this->_mainContent->assign("experiment002",$experiment002);
+    } 
+
     
     $this->viewFile="Home/index.html";
     if($page>1)
