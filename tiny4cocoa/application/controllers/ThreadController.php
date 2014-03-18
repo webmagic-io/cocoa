@@ -124,21 +124,11 @@ class ThreadController extends baseController
     $voteInfo = $threadModel->voteInfo($id);
     $userVote = $threadModel->userVote($id,$this->userid);
 
-    //experiment
+    //limit10replys
     $isBot = ToolModel::isBot();
     if($this->userid == 0 && !$isBot && $replysCount>10) {
 
-      if(rand(0,1)==0) {
-      
-        $experiment001 = "origin";
-      }
-      else {
-        
-        $experiment001 = "limit10replys";
-        $replys = array_slice($replys,0,10);
-      }
-      $this->_view->assign("experiment001",$experiment001);
-      $this->_mainContent->assign("experiment001",$experiment001);
+      $replys = array_slice($replys,0,10);
     } 
     
     if(!$this->userid)
