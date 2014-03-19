@@ -257,10 +257,12 @@ function sendweibo() {
       </div>
       
     {/if}
-    
+
+    {if !isset($userid) || $userid==0}
     <div class="alert alert-warn">
       <h4>本帖有{$replysCount}个回复，因为您没有注册或者登录本站，所以，只能看到本帖的10条回复。如果想看到全部回复，请注册或者登录本站。</h4>
     </div>
+    {/if}
 
     <div style="text-align:center;padding-bottom:20px;">
       <div class="visible-phone">
