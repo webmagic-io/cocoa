@@ -237,28 +237,7 @@ class HomeController extends baseController
     echo $idStr;
   }
   
-  public function testallAction() {
-    
-    $newscenter = new NewscenterModel();
-    $ids = $newscenter->uncheckedIds();
-    $apples = array();
-    foreach($ids as $id) {
-      $url = "http://tiny4cocoa.com:9090/api/news/?id=$id";
-      $ret = ToolModel::getUrl($url);
-      var_dump($ret);
-      $newscenter->markApple($id,$ret,0);
-    }
-  }
   
-  public function testNewsAction() {
-    
-    $id = $this->intVal(3);
-    $newscenter = new NewscenterModel();
-    $news = $newscenter->data($id);
-    $news["channel"] = $news["sid"];
-    $ret = ToolModel::post("http://127.0.0.1:37210/isApple",$news);
-    var_dump($ret);
-  }
   
   public function newsdataAction() {
     

@@ -349,14 +349,14 @@ class ThreadModel extends baseDbModel {
       
       $subject = "$actionUser 在帖子《$thread[title]》里提到了你";
       $mailContent = "$actionUser 在帖子《$thread[title]》里提到了你<br/>";
-      $mailContent .= "<p><a href=http://tiny4cocoa.com/thread/show/$thread[id]/>http://tiny4cocoa.com/thread/show/$thread[id]/</a></p>";
+      $mailContent .= "<p><a href=http://OurCoders.com/thread/show/$thread[id]/>http://OurCoders.com/thread/show/$thread[id]/</a></p>";
       $mailContent .= "<p> $actionUser 说到:</p>";
       $mailContent .= Markdown(stripslashes($content));
     }
     else {
       $subject = "$actionUser 在回复帖子《$thread[title]》时提到了你";
       $mailContent = "$actionUser 在回复帖子《$thread[title]》时提到了你<br/>";
-      $mailContent .= "<p><a href=http://tiny4cocoa.com/thread/show/$thread[id]/>http://tiny4cocoa.com/thread/show/$thread[id]/</a></p>";
+      $mailContent .= "<p><a href=http://OurCoders.com/thread/show/$thread[id]/>http://OurCoders.com/thread/show/$thread[id]/</a></p>";
       $mailContent .= "<p> $actionUser 回复说:</p>";
       $mailContent .= Markdown(stripslashes($content));
     }
@@ -507,7 +507,7 @@ class ThreadModel extends baseDbModel {
     
     $subject = "您参与的帖子《".$threadname."》有了新回复";
     $mailContent = "您参与的帖子《".$threadname."》有了新回复<br/>";
-    $mailContent .= "<p><a href=http://tiny4cocoa.com/thread/show/$threadid/>http://tiny4cocoa.com/thread/show/$threadid/</a></p>";
+    $mailContent .= "<p><a href=http://OurCoders.com/thread/show/$threadid/>http://OurCoders.com/thread/show/$threadid/</a></p>";
     $mailContent .= "<p> $replyuser 刚刚回复说:</p>";
     $mailContent .= Markdown(stripslashes($content));
     $mail = new MailModel();
