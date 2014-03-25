@@ -185,6 +185,7 @@ class ThreadModel extends baseDbModel {
     $result = $this->fetchArray($sql);
     $c = $result[0]["c"];
     $this->atNotify(0,$data);
+    $this->replyNotify($data,1);
     return $c;
   }
   
@@ -310,7 +311,7 @@ class ThreadModel extends baseDbModel {
         ->fetchOne();
     return $attach;
   }
-  
+
   public function atNotify($isThread,$data) {
     
     $content = $data["content"];
@@ -483,25 +484,59 @@ class ThreadModel extends baseDbModel {
 		$this->run($sql);
   }
   
-  //------------------------暂时废弃
-  public function replyNotify($data) {
+  public function replyNotify($data,$own=1) {
     
-    $users = $this->getThreadUsers($data["threadid"]);
-    if(($key = array_search($data["userid"], $users)) !== false) {
-        unset($users[$key]);
+    if($own==1) {
+
+      $thread = $this->threadById($data["threadid"]);
+      $userid = $thread["createbyid"];
+      if($userid==$data["userid"])
+        return;
+      $userModel = new UserModel();
+      $user = $userModel->userInfo($userid);
+      $this->replyNotifyMailToOwner(
+                $user["username"], 
+                $user["email"], 
+                $data["name"],
+                $data["content"],
+                $thread["title"],
+                $data["threadid"]);
     }
-    if(count($users)==0)
-      return;
-    $usersStr = join(",",$users);
-    $sql = "SELECT `username`,`email` FROM `cocoabbs_uc_members` WHERE `uid` in ($usersStr);";
-    $result = $this->fetchArray($sql);
-    $thread = $this->threadById($data["threadid"]);
-    foreach($result as $user) {
+    else {
+
+      $users = $this->getThreadUsers($data["threadid"]);
+      if(($key = array_search($data["userid"], $users)) !== false) {
+        unset($users[$key]);
+      }
+      if(count($users)==0)
+        return;
+      $usersStr = join(",",$users);
+          $sql = "SELECT `username`,`email` FROM `cocoabbs_uc_members` WHERE `uid` in ($usersStr);";
+      $result = $this->fetchArray($sql);
+      $thread = $this->threadById($data["threadid"]);
+      foreach($result as $user) {
       
-      $this->replyNotifyMail($user["username"], $user["email"], $data["name"], $data["content"],$thread["title"],$data["threadid"]);
+        $this->replyNotifyMail($user["username"], $user["email"], $data["name"], $data["content"],$thread["title"],$data["threadid"]);
+      }
     }
   }
   
+  private function replyNotifyMailToOwner($username, $email, $replyuser, $content, $threadname, $threadid) {
+    
+    
+    $subject = "您创建的帖子《".$threadname."》有了新回复";
+    $mailContent = "您创建的帖子《".$threadname."》有了新回复<br/>";
+    $mailContent .= "<p><a href=http://OurCoders.com/thread/show/$threadid/>http://OurCoders.com/thread/show/$threadid/</a></p>";
+    $mailContent .= "<p> $replyuser 刚刚回复说:</p>";
+    $mailContent .= Markdown(stripslashes($content));
+    $mail = new MailModel();
+    $mail->generateMail(
+            $email,
+             "OurCoders(我们程序员)社区 <OurCoders@tiny4.org>", 
+            $subject, 
+            $mailContent);
+  }
+
   private function replyNotifyMail($username, $email, $replyuser, $content, $threadname, $threadid) {
     
     
@@ -513,7 +548,7 @@ class ThreadModel extends baseDbModel {
     $mail = new MailModel();
     $mail->generateMail(
             $email,
-             "Tiny4Cocoa论坛 <tiny4cocoa@tiny4.org>", 
+             "OurCoders(我们程序员)社区 <OurCoders@tiny4.org>", 
             $subject, 
             $mailContent);
   }
