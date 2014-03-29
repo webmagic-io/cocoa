@@ -32,6 +32,9 @@ class StaticController extends tinyApp_Controller
     include("$framework/flot/jquery.flot.categories.js");
     include("$framework/Jcrop/js/jquery.Jcrop.min.js");
     include("$framework/jsvote/src/jquery.jsvote.js");
+
+    include("$framework/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js");
+    include("$framework/tag-it/js/tag-it.min.js");
     include("$path/base.js");
   }
 	
@@ -69,6 +72,11 @@ class StaticController extends tinyApp_Controller
     include("$bootstrap/bootstrap-responsive.min.css");
     include("$framework/Jcrop/css/jquery.Jcrop.min.css");
     include("$framework/jsvote/src/jsvote.css");
+
+    include("$framework/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css");
+    include("$framework/tag-it/css/jquery.tagit.css");
+    include("$framework/tag-it/css/tagit.ui-zendesk.css");
+
     include("$path/site.css");
   }
 }

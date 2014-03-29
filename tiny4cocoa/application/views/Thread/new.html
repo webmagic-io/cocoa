@@ -11,6 +11,7 @@ $(document).ready(function() {
   $("#wmd-input").bind('keyup.ctrl_return', function(){
     $("#submit").click();
   });
+  $("#tags").tagit();
 });
 </script>
 <div class="row">
@@ -35,9 +36,13 @@ $(document).ready(function() {
       		</div>
       		<div id="wmd-preview" class="wmd-panel" style="width:90%;">
       		</div>
+          <h4>Tag</h4>
+          <div class="threadblock">
+            <ul id="tags"  style="width:90%;"></ul>
+          </div>
           <div class="threadblock" style="text-align:center;">
             <p>使用Ctrl+回车键也可以发布新帖</p>
-            <input type="submit" name="submit" value="发布" id="submit" class="btn btn-primary"> 
+            <input type="submit" name="submit" value="发布" id="submit" class="btn btn-primary">
             <input type="button" name="cancel" value="取消" id="cancel" class="btn">
           </div>
         </form>
