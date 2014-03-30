@@ -7,11 +7,36 @@ body {
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
+  $("#tags").tagit({
+        
+      afterTagAdded: function(event, ui) {
+        var tags = $("#tags").tagit("assignedTags");
+        if(tags.length>1) {
+          $('#tag_warnning').hide();
+        }
+      },
+      afterTagRemoved: function(event, ui) {
+        var tags = $("#tags").tagit("assignedTags");
+        if(tags.length<2) {
+          $('#tag_warnning').show();
+        }
+      }
+    });
   $("#newform").validate();
+  $("#newform").submit(function(){
+
+    var tags = $("#tags").tagit("assignedTags");
+    if(tags.length<2) {
+
+      $('#tag_warnning').show();
+      return false;  
+    }
+    return true;
+  });
+
   $("#wmd-input").bind('keyup.ctrl_return', function(){
     $("#submit").click();
   });
-  $("#tags").tagit();
 });
 </script>
 <div class="row">
@@ -38,7 +63,8 @@ $(document).ready(function() {
       		</div>
           <h4>Tag</h4>
           <div class="threadblock">
-            <ul id="tags"  style="width:90%;"></ul>
+            <div id="tag_warnning" style='color:red;display:none;'>必须添加两个以上的Tag。</div>
+            <ul id="tags"  style="width:90%;" required></ul>
           </div>
           <div class="threadblock" style="text-align:center;">
             <p>使用Ctrl+回车键也可以发布新帖</p>
