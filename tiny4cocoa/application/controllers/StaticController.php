@@ -32,10 +32,27 @@ class StaticController extends tinyApp_Controller
     include("$framework/flot/jquery.flot.categories.js");
     include("$framework/Jcrop/js/jquery.Jcrop.min.js");
     include("$framework/jsvote/src/jquery.jsvote.js");
+    
+    include("$path/base.js");
+  }
+
+    public function userjsAction() {
+        
+    header ("content-type: application/x-javascript; charset: utf-8");
+    header('Pragma: ');
+    header ("cache-control: max-age=600");
+    ob_start();
+    $offset = 60 * 60 * 24;
+    $expire = "expires: " . gmdate ("D, d M Y H:i:s", time() + $offset) . " GMT";
+    header ($expire);
+    $path=$this->_pathinfo['base'].'/public/js';
+    $base = $this->_pathinfo['base'];
+    $path = $base.'/public/js';
+    $bootstrap = $this->_pathinfo['base']."/public/bootstrap/js/";
+    $framework = $this->_pathinfo['tinyAppLib'];
 
     include("$framework/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js");
     include("$framework/tag-it/js/tag-it.min.js");
-    include("$path/base.js");
   }
 	
   public function wmdjsAction() {
