@@ -16,7 +16,7 @@ class baseController extends tinyApp_Controller
 				
 		$this->sitename = "OurCoders (我们程序员)";
 		$this->short_sitename = "OurCoders";
-
+    	$this->pathinfo = $pathinfo;
 		parent::__construct($pathinfo,$controller);
 		$this->begintime = microtime(true);
 		$this->_layout="index";
@@ -164,7 +164,7 @@ class baseController extends tinyApp_Controller
 
 
 
-	public function doTemplate($dir,$file,$object){
+  public function doTemplate($dir,$file,$object){
   
   	$smarty = new Smarty();
   	$smarty->template_dir=$this->pathinfo['views'];
@@ -184,6 +184,5 @@ class baseController extends tinyApp_Controller
 	}
   	return $smarty->fetch("$dir/$file.html");	
   }
-
-		}
+}
 		

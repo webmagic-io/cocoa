@@ -18,45 +18,7 @@
       <p class="pull-right">
         <a href="/thread/">最新</a> | <a href="/thread/hot/">最热</a> | <a href="/thread/cold/">最冷</a>
       </p>
-      <strong>讨论区</strong>
-      {foreach from=$threads item=item}
-      <div class="threadblock">
-        <div class="pull-left" style="width:48px;height:48px;background-color:#d9edf7;margin-right:5px;">
-          <div style="text-align:center;color:green;font-weight:bold;margin-top:4px;">{$item.likecount-$item.dislikecount}<br/>赞成</div>
-        </div>
-        
-        <div class="pull-left" style="width:48px;height:48px;background-color:#3a87ad;margin-right:5px;">
-          <div style="text-align:center;color:white;font-weight:bold;margin-top:4px;">{$item.replys}<br/>回复</div>
-        </div>
-        
-        {if $item.image}
-          <a href="/user/show/{$item.createbyid}/{$item.createby}/" class="muted" target="_blank">
-            <img src="{$item.image}" width="24" height="24" style="float:right;border-radius:5px;">
-          </a>
-        {/if}
-        <div style="margin-left:54px;">
-          <a href="/thread/show/{$item.id}/"
-          {if isset($experiment002) && $experiment002 == "_blank"}target="_blank"{/if}
-          >{$item.title}</a>
-          <div class="pull-right clearfix" style="padding-right:5px;">
-            {foreach from=$item.tagArray item=tag}
-              <a href="/tag/name/{$tag}/" class="label label-info" target="_blank">{$tag}</a>
-            {/foreach}
-          </div>
-          <div class="muted">
-            {$item.createtime} by  
-            <a href="/user/show/{$item.createbyid}/{$item.createby}/" class="muted" target="_blank">{$item.createby}</a> 
-            {if $item.lastreplyid>0}
-              | 最后回复 {$item.updatetime} by <a href="/user/show/{$item.lastreplyid}/{$item.lastreply}/" class="muted" target="_blank">{$item.lastreply}</a> 
-            {/if}
-          </div>
-        </div>
-      </div>
-      {/foreach}
-    </div>
-    <div style="text-align:center;">
-      {$pageControl}
-    </div>
+      {$content}
   </div>
 </div>
 

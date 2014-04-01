@@ -24,9 +24,14 @@ class HomeController extends baseController
     $thread = new ThreadModel();
     $threadCount = $thread->threadCount();
     $threadPageSize = 40;
+    
     $threads = $thread->threads(1,$threadPageSize);
 		$pageControl = ToolModel::pageControl(1,$threadCount,$threadPageSize,"<a href='/thread/index/#page#/'>",0);
-    
+    $object["threads"] = $threads;
+    $object["pageControl"] = $pageControl;
+    $content = $this->doTemplate("moudle","thread",$object);
+    $this->_mainContent->assign("content",$content);
+
 
     $users = $cacheModel->getCache("topusers","home");
     if (!$users) {
@@ -36,6 +41,7 @@ class HomeController extends baseController
       $cacheModel->createCache("topusers","home",$users);
     }
     $this->_mainContent->assign("users",$users);
+
 
     $this->_mainContent->assign("pageControl",$pageControl);
     $this->_mainContent->assign("threads",$threads);
