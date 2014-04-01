@@ -27,6 +27,7 @@ class ThreadModel extends baseDbModel {
       $item["updatetime"] = ToolModel::countTime($item["updatedate"]);
       $item["image"] = DiscuzModel::get_avatar($item["createbyid"],"small");
       $item["title"] = stripslashes($item["title"]);
+      $item["tagArray"] = explode(",", $item["tags"]);
       $ret[] = $item;
     } 
     return $ret;
@@ -570,8 +571,10 @@ class ThreadModel extends baseDbModel {
   public function addTags($tags,$threadid) {
 
     $tagArray = explode(",", $tags);
+    
     if(count($tagArray)==0)
       return;
+
     foreach ($tagArray as $tagname) {
 
       $data = array();

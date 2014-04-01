@@ -206,6 +206,7 @@ class ThreadController extends baseController
       $data["createdate"] = $time;
       $data["updatedate"] = $time;
       $data["score"] = $time;
+      $data["tags"] = $_POST["tags"];
 
       if(strlen($_POST["title"])>0)
         if(strlen($_POST["content"])>0) {

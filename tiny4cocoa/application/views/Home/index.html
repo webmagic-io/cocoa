@@ -38,6 +38,11 @@
           <a href="/thread/show/{$item.id}/"
           {if isset($experiment002) && $experiment002 == "_blank"}target="_blank"{/if}
           >{$item.title}</a>
+          <div class="pull-right clearfix" style="padding-right:5px;">
+            {foreach from=$item.tagArray item=tag}
+              <a href="/tag/name/{$tag}/" class="label label-info" target="_blank">{$tag}</a>
+            {/foreach}
+          </div>
           <div class="muted">
             {$item.createtime} by  
             <a href="/user/show/{$item.createbyid}/{$item.createby}/" class="muted" target="_blank">{$item.createby}</a> 
