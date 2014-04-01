@@ -148,37 +148,6 @@ class baseController extends tinyApp_Controller
 				return $ret;
 			}
 			
-			public function createMainBlock($title,$content,$class) {			
-				$ret=	"<div class='main_block $class'><h3 class='title'>$title</h3>$content</div>";
-				return $ret;
-			}
-			public function initSidebar1() {
-				$classModel=new ClassModel();
-				$data=$classModel->getClassesAndCounts(1);
-				$sb.=$this->createSbBlock("编程语言和开发工具",$this->makeClassList($data));
-				$data=$classModel->getClassesAndCounts(2);
-				$sb.=$this->createSbBlock("操作系统和平台",$this->makeClassList($data));
-				$data=$classModel->getClassesAndCounts(3);
-				$sb.=$this->createSbBlock("垂直技术和领域",$this->makeClassList($data));
-
-				return $sb;
-			}
-			
-			public function makeClassList($data)
-			{
-				$ret="<ul>";
-				if(count($data)>0)
-				foreach($data as $d)
-					$ret.="<li><a href='/class/show/$d[id]/'>$d[name]($d[c])</a></li>";
-				$ret.="</ul>";
-				return $ret;
-			}
-			
-			public function createSbBlock($title,$content)  {
-				$ret=	"<div class='sb_block'><h3 class='title'>$title</h3>$content</div>";
-				return $ret;
-			}
-		
 	    public function setTitle($title) {
 	      
 	      $this->_view->assign("title","$title - $this->sitename");
@@ -192,5 +161,29 @@ class baseController extends tinyApp_Controller
 	      $this->_mainContent->assign("message",$message);
 	      $this->display();
 	    }
+
+
+
+	public function doTemplate($dir,$file,$object){
+  
+  	$smarty = new Smarty();
+  	$smarty->template_dir=$this->pathinfo['views'];
+  	$smarty->compile_dir=$this->pathinfo['compile'];
+  	$smarty->assign("object",$object);
+  	return $smarty->fetch("$dir/$file.html");	
+  }
+  
+  public function fetchTemplate($dir,$file,$array){
+  
+  	$smarty = new Smarty();
+  	$smarty->template_dir=$this->pathinfo['views'];
+  	$smarty->compile_dir=$this->pathinfo['compile'];
+	foreach($array as $key=>$value) {
+		
+		$smarty->assign($key,$value);
+	}
+  	return $smarty->fetch("$dir/$file.html");	
+  }
+
 		}
 		
