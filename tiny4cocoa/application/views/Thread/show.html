@@ -169,6 +169,11 @@ function sendweibo() {
           </span>
         </small>
         <div class="threadblock">{$thread.content}</div>
+        <div class="clearfix" style="padding-right:5px;">
+            {foreach from=$thread.tagArray item=tag}
+            <a href="/tag/name/{$tag}/" class="label label-info" target="_blank">{$tag}</a>
+            {/foreach}
+        </div>
           <div style="text-align:right;">
             {if $userid}
               {if $userid==$thread.createbyid}
