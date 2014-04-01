@@ -567,6 +567,19 @@ class ThreadModel extends baseDbModel {
     $this->select("thread_replys")->where("`userid` = $userid")->update($data);
   }
   
+  public function addTags($tags,$threadid) {
+
+    $tagArray = explode(",", $tags);
+    if(count($tagArray)==0)
+      return;
+    foreach ($tagArray as $tagname) {
+
+      $data = array();
+      $data["tagname"] = $tagname;
+      $data["tid"] = $threadid;
+      $this->select("threadtags")->insert($data);
+    }
+  }
 }
 
 

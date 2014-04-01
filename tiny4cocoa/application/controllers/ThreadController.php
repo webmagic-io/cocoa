@@ -188,7 +188,7 @@ class ThreadController extends baseController
       die();
     }
     if($_POST){
-      
+     
       if(!$this->isEmailValidated) {
         header("location: /home/");
         die();
@@ -206,6 +206,7 @@ class ThreadController extends baseController
       $data["createdate"] = $time;
       $data["updatedate"] = $time;
       $data["score"] = $time;
+
       if(strlen($_POST["title"])>0)
         if(strlen($_POST["content"])>0) {
           $threadModel = new ThreadModel();
@@ -216,6 +217,9 @@ class ThreadController extends baseController
             $this->display();
             die();
           }
+    
+          $tags = $_POST["tags"];
+          $threadModel->addTags($tags,$threadid);
           header("location: /thread/show/$threadid/");
           die();
       }

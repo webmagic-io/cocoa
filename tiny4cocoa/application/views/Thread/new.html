@@ -8,7 +8,8 @@ body {
 <script type="text/javascript">
 $(document).ready(function() {
   $("#tags").tagit({
-        
+
+      singleField: true,
       afterTagAdded: function(event, ui) {
         var tags = $("#tags").tagit("assignedTags");
         if(tags.length>1) {
