@@ -42,7 +42,7 @@ class ThreadController extends baseController
       
     $object["threads"] = $threads;
     $object["pageControl"] = $pageControl;
-    $content = $this->doTemplate("moudle","thread",$object);
+    $content = $this->doTemplate("Module","thread",$object);
     $this->_mainContent->assign("content",$content);
 
     
