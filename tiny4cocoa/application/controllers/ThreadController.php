@@ -40,8 +40,11 @@ class ThreadController extends baseController
     $threads = $threadModel->threads($page,$threadPageSize,$order);
 		$pageControl = ToolModel::pageControl($page,$threadCount,$threadPageSize,"<a href='/thread/$action/#page#/'>");
       
-    $this->_mainContent->assign("threads",$threads);
-    $this->_mainContent->assign("pageControl",$pageControl);
+    $object["threads"] = $threads;
+    $object["pageControl"] = $pageControl;
+    $content = $this->doTemplate("moudle","thread",$object);
+    $this->_mainContent->assign("content",$content);
+
     
     
     $newthreads = $threadModel->threads(1,20);
