@@ -21,12 +21,18 @@ class TagController extends baseController
     $threadPageSize = 40;
     
     $threads = $threadModel->threadsByTag($tag, $page, $threadPageSize);
-	
-	$pageControl = ToolModel::pageControl($page,$threadCount,$threadPageSize,"<a href='/tag/name/$tag/#page#/'>",0);
+    $pageControl = ToolModel::pageControl(
+                      $page,
+                      $threadCount,
+                      $threadPageSize,
+                      "<a href='/tag/name/$tag/#page#/'>",
+                      0);
     $object["threads"] = $threads;
     $object["pageControl"] = $pageControl;
     $content = $this->doTemplate("Module","thread",$object);
     $this->_mainContent->assign("content",$content);
+
+    $this->_mainContent->assign("tag",$tag);
 
     $this->display();
   }  
