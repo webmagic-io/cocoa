@@ -256,6 +256,7 @@ class ThreadController extends baseController
         $data["title"] = $_POST["title"];
         $data["content"] = $_POST["content"];
         $data["tags"] = $_POST["tags"];
+        $threadModel->tagChange($data["tags"],$data["id"]);
         $threadModel->updateThread($data);
         header("location: /thread/show/$data[id]/");
         die();

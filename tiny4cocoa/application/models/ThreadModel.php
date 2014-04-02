@@ -585,6 +585,42 @@ class ThreadModel extends baseDbModel {
     }
   }
 
+  public function tagChange($tags,$threadid) {
+
+    $result = $this
+                ->select("threads")
+                ->fields("tags")
+                ->where("`id` = $threadid")
+                ->fetchAll();
+    if (count($result)==0)
+      $oldtagArray = array();
+    else
+    {
+      $oldtags = $result[0]["tags"];
+      $oldtagArray = explode(",", $oldtags);
+    }
+    if (strlen($tags)>0) {
+      $tagArray = explode(",", $tags);
+    }
+
+    $removeArray = array_diff($oldtagArray,$tagArray);
+    if(count($removeArray)!=0)
+      foreach ($removeArray as $tag) {
+        $this->select("threadtags")->where("`tid` = $threadid AND `tagname`='$tag'")->delete();
+      }
+    $addArray = array_diff($tagArray,$oldtagArray);
+    if(count($addArray)!=0) 
+      foreach ($addArray as $tag) {
+
+        $data = array();
+        $data["tagname"] = $tag;
+        $data["tid"] = $threadid;
+        $this
+          ->select("threadtags")
+          ->insert($data);
+      }
+  }
+
   public function threadsCountByTag($tag) {
 
     $countSql = "SELECT count(*) as `c` FROM `threads`
