@@ -1,81 +1,16 @@
-<script src="/static/wmdjs/20130919/" type="text/javascript"></script>
 <style>
 body {
   background-color: 
   #ccc;
 }
 </style>
-<script type="text/javascript">
-$(document).ready(function() {
-  $("#tags").tagit({
 
-      singleField: true,
-      afterTagAdded: function(event, ui) {
-        var tags = $("#tags").tagit("assignedTags");
-        if(tags.length>1) {
-          $('#tag_warnning').hide();
-        }
-      },
-      afterTagRemoved: function(event, ui) {
-        var tags = $("#tags").tagit("assignedTags");
-        if(tags.length<2) {
-          $('#tag_warnning').show();
-        }
-      }
-    });
-  $("#newform").validate();
-  $("#newform").submit(function(){
-
-    var tags = $("#tags").tagit("assignedTags");
-    if(tags.length<2) {
-
-      $('#tag_warnning').show();
-      return false;  
-    }
-    return true;
-  });
-
-  $("#wmd-input").bind('keyup.ctrl_return', function(){
-    $("#submit").click();
-  });
-});
-</script>
 <div class="row">
   
   <div class="span8">
     <div class="content-unit">
       <h4>新建帖子</h4>
-      <div class="threadblock">
-        {if !$isEmailValidated}
-           您的注册邮箱还没有通过验证，不能发帖和回帖。 请检查您的注册邮箱里面是否有注册验证邮件。 如果找不到可以看看邮箱的Spam目录。 
-        {else}
-        {if $reputation < 0 }
-          你的声望小于0，没有资格发帖。 
-        {else}
-        <form action="/thread/new/" 
-          method="post" accept-charset="utf-8" id="newform">
-          <label for="title">标题</label><input type="text" name="title" value="" id="title" style="width:90%;" required>
-          <label for="content">内容</label>
-      		<div id="wmd-editor" class="wmd-panel" style="width:90%;">
-      			<div id="wmd-button-bar"></div>
-      			<textarea id="wmd-input" name="content" minlength="5" required></textarea>
-      		</div>
-      		<div id="wmd-preview" class="wmd-panel" style="width:90%;">
-      		</div>
-          <h4>Tag</h4>
-          <div class="threadblock">
-            <div id="tag_warnning" style='color:red;display:none;'>必须添加两个以上的Tag。</div>
-            <ul id="tags"  style="width:90%;" required></ul>
-          </div>
-          <div class="threadblock" style="text-align:center;">
-            <p>使用Ctrl+回车键也可以发布新帖</p>
-            <input type="submit" name="submit" value="发布" id="submit" class="btn btn-primary">
-            <input type="button" name="cancel" value="取消" id="cancel" class="btn">
-          </div>
-        </form>
-        {/if}
-        {/if}
-      </div>
+      {$threadedit}
     </div>
   </div>
   

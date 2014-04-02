@@ -1,0 +1,90 @@
+
+<script src="/static/wmdjs/20130919/" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#tags").tagit({
+
+      singleField: true,
+      afterTagAdded: function(event, ui) {
+        var tags = $("#tags").tagit("assignedTags");
+        if(tags.length>1) {
+          $('#tag_warnning').hide();
+        }
+      },
+      afterTagRemoved: function(event, ui) {
+        var tags = $("#tags").tagit("assignedTags");
+        if(tags.length<2) {
+          $('#tag_warnning').show();
+        }
+      }
+    });
+  $("#newform").validate();
+  $("#newform").submit(function(){
+
+    var tags = $("#tags").tagit("assignedTags");
+    if(tags.length<2) {
+
+      $('#tag_warnning').show();
+      return false;  
+    }
+    return true;
+  });
+
+  $("#wmd-input").bind('keyup.ctrl_return', function(){
+    $("#submit").click();
+  });
+});
+</script>
+
+<div class="threadblock">
+  {if !$object.isEmailValidated}
+     您的注册邮箱还没有通过验证，不能发帖和回帖。 请检查您的注册邮箱里面是否有注册验证邮件。 如果找不到可以看看邮箱的Spam目录。 
+  {else}
+  {if $object.reputation < 0 }
+    你的声望小于0，没有资格发帖。 
+  {else}
+  <form
+    {if $object.action=="new"}
+      action="/thread/new/" 
+    {else}
+      action="/thread/editThread/" 
+    {/if}
+    method="post" accept-charset="utf-8" id="newform">
+    <label for="title">标题</label>
+    <input type="hidden" name="threadid" 
+    {if isset($object.thread)}
+    value="{$object.thread.id}" 
+    {/if}
+    >
+    <input type="text" name="title" 
+    {if isset($object.thread)}
+    value="{$object.thread.title}" 
+    {/if}
+    id="title" style="width:90%;" required>
+    <label for="content">内容</label>
+    <div id="wmd-editor" class="wmd-panel" style="width:90%;">
+      <div id="wmd-button-bar"></div>
+      <textarea id="wmd-input" name="content" minlength="5" required>{if isset($object.thread)}{$object.thread.content}{/if}</textarea>
+    </div>
+    <div id="wmd-preview" class="wmd-panel" style="width:90%;">
+    </div>
+    <h4>Tag</h4>
+    <div class="threadblock" >
+      <div style="width:90%;">
+      <div id="tag_warnning" style='color:red;display:none;'>必须添加两个以上的Tag。</div>
+      <input id="tags" name="tags"     
+      {if isset($object.thread)}
+      value="{$object.thread.tags}" 
+      {/if}
+      required/>
+     </div>
+    </div>
+    <div class="threadblock" style="text-align:center;">
+      <p>使用Ctrl+回车键也可以发布新帖</p>
+      <input type="submit" name="submit" value="发布" id="submit" class="btn btn-primary">
+      <input type="button" name="cancel" value="取消" id="cancel" class="btn">
+    </div>
+  </form>
+  {/if}
+  {/if}
+</div>

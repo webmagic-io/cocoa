@@ -190,56 +190,61 @@ class ThreadController extends baseController
       header("location: /user/login/");
       die();
     }
-    if($_POST){
-     
-      if(!$this->isEmailValidated) {
-        header("location: /home/");
-        die();
-      }
-      if($reputation<0) {
-        header("location: /home/");
-        die();
-      }
-      $data = array();
-      $time = time();
-      $data["title"] = $_POST["title"];
-      $data["content"] = $_POST["content"];
-      $data["createby"] = $this->username;
-      $data["createbyid"] = $this->userid;
-      $data["createdate"] = $time;
-      $data["updatedate"] = $time;
-      $data["score"] = $time;
-      $data["tags"] = $_POST["tags"];
-
-      if(strlen($_POST["title"])>0)
-        if(strlen($_POST["content"])>0) {
-          $threadModel = new ThreadModel();
-          $threadid = $threadModel->newThread($data);
-          if($threadid==-1) {
-            
-            $this->viewFile="Thread/duplicate.html";
-            $this->display();
-            die();
-          }
     
-          $tags = $_POST["tags"];
-          $threadModel->addTags($tags,$threadid);
-          header("location: /thread/show/$threadid/");
-          die();
-      }
-    }
-    $this->_mainContent->assign("reputation",$reputation);
-    $this->_mainContent->assign("isEmailValidated",$this->isEmailValidated);
+    if($_POST)
+      $this->dealNewThreadPost($reputation);
+
+    $object["action"] = "new";
+    $object["isEmailValidated"] = $this->isEmailValidated;
+    $object["reputation"] = $reputation;
+    $threadedit = $this->doTemplate("Module","threadedit",$object);
+    $this->_mainContent->assign("threadedit",$threadedit);
+
     $this->display();
   }
 
-  public function editThreadAction() {
+  public function dealNewThreadPost($reputation) {
+
+    if(!$this->isEmailValidated) {
+      header("location: /home/");
+      die();
+    }
+    if($reputation<0) {
+      header("location: /home/");
+      die();
+    }
+    $data = array();
+    $time = time();
+    $data["title"] = $_POST["title"];
+    $data["content"] = $_POST["content"];
+    $data["createby"] = $this->username;
+    $data["createbyid"] = $this->userid;
+    $data["createdate"] = $time;
+    $data["updatedate"] = $time;
+    $data["score"] = $time;
+    $data["tags"] = $_POST["tags"];
+
+    if(strlen($_POST["title"])>0)
+      if(strlen($_POST["content"])>0) {
+        $threadModel = new ThreadModel();
+        $threadid = $threadModel->newThread($data);
+        if($threadid==-1) {
+          
+          $this->viewFile="Thread/duplicate.html";
+          $this->display();
+          die();
+        }
     
-    $id = $this->intVal(3);
+        $tags = $_POST["tags"];
+        $threadModel->addTags($tags,$threadid);
+        header("location: /thread/show/$threadid/");
+        die();
+    }
+  }
+
+  public function dealThreadEditPost() {
+
     $threadModel = new ThreadModel();
-    
-    if($this->userid==0)
-      header("location: /thread/show/$id/");
     if($_POST &&
       strlen($_POST["threadid"])>0 &&
       strlen($_POST["title"])>0 && 
@@ -250,18 +255,43 @@ class ThreadController extends baseController
         $data["modifydate"] = time();
         $data["title"] = $_POST["title"];
         $data["content"] = $_POST["content"];
+        $data["tags"] = $_POST["tags"];
         $threadModel->updateThread($data);
         header("location: /thread/show/$data[id]/");
         die();
     }
+
+  }
+  public function editThreadAction() {
+    
+    $id = $this->intVal(3);
+
+    $userModel = new UserModel();
+    $reputation = $userModel->reputation($this->userid);
+
+    $threadModel = new ThreadModel();
+    
+    if($this->userid==0)
+      header("location: /thread/show/$id/");
+
+    $this->dealThreadEditPost();
     
     $thread = $threadModel->threadById($id,0);
+
     if($thread["createbyid"]!=$this->userid)
       header("location: /thread/show/$id/");
+
+    $object["action"] = "editThread";
+    $object["isEmailValidated"] = $this->isEmailValidated;
+    $object["reputation"] = $reputation;
+    $object["thread"] = $thread;
+    
+    $threadedit = $this->doTemplate("Module","threadedit",$object);
+    $this->_mainContent->assign("threadedit",$threadedit);
+
     $this->_mainContent->assign("userid",$this->userid);
-    $this->_mainContent->assign("thread",$thread);
+
     $this->setTitle($thread["title"]);
-    $this->_mainContent->assign("isEmailValidated",$this->isEmailValidated);
     $this->display();
   }
   
