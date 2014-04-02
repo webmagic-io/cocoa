@@ -584,6 +584,48 @@ class ThreadModel extends baseDbModel {
       $this->select("threadtags")->insert($data);
     }
   }
+
+  public function threadsCountByTag($tag) {
+
+    $countSql = "SELECT count(*) as `c` FROM `threads`
+      LEFT JOIN `threadtags` ON `threads`.`id` = `threadtags`.`tid` 
+      WHERE `del` = 0 AND `tagname`='$tag'";
+    $result =  $this->fetchArray($countSql);
+    if (!$result) {
+      return 0;
+    }
+    return $result[0]["c"];
+  }
+
+  public function threadsByTag($tag, $page, $pageSize) {
+    
+    $start = ($page-1)*$pageSize;
+
+    $countSql = "SELECT count(*) FROM `threads`
+      LEFT JOIN `threadtags` ON `threads`.`id` = `threadtags`.`tid` 
+      WHERE `del` = 0 AND `tagname`='$tag'";
+
+    $sql = 
+      "SELECT * FROM `threads`
+      LEFT JOIN `threadtags` ON `threads`.`id` = `threadtags`.`tid` 
+      WHERE `del` = 0 AND `tagname`='$tag'
+      ORDER BY `id` DESC  
+      limit $start,$pageSize;";
+    
+    $result =  $this->fetchArray($sql);
+    $ret = array();
+    if(count($result)==0)
+      return $ret;
+    foreach($result as $item) {
+      $item["createtime"] = ToolModel::countTime($item["createdate"]);
+      $item["updatetime"] = ToolModel::countTime($item["updatedate"]);
+      $item["image"] = DiscuzModel::get_avatar($item["createbyid"],"small");
+      $item["title"] = stripslashes($item["title"]);
+      $item["tagArray"] = explode(",", $item["tags"]);
+      $ret[] = $item;
+    } 
+    return $ret;
+  }
 }
 
 
