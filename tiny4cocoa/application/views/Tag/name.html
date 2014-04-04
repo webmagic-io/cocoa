@@ -8,6 +8,13 @@
   </div>
 
   <div class="span5">
-    
+    <div class="siderbar-unit">
+    	<h4>相关Tag：</h4>
+    	<ul>
+      	{foreach from=$relatedTags item=item}
+      		<li><a href="/tag/name/{$item.tagname}/">{$item.tagname}</a></li>
+      	{/foreach}
+      </ul>
+   	</div>
   </div>
 </div>

@@ -662,6 +662,21 @@ class ThreadModel extends baseDbModel {
     } 
     return $ret;
   }
+
+  public function relatedTags($tags) {
+
+    $sql = "SELECT `tagname`,count(`tagname`) as `c`
+            FROM `threadtags` 
+            WHERE `tid` in (
+              SELECT `tid` FROM `threadtags` 
+              WHERE `tagname` = '$tags') 
+            AND `tagname` != '$tags'
+            GROUP BY `tagname`
+            ORDER BY `c` DESC
+            ";
+    $result = $this->fetchArray($sql);
+    return $result;
+  }
 }
 
 

@@ -31,6 +31,9 @@ class TagController extends baseController
     $object["pageControl"] = $pageControl;
     $content = $this->doTemplate("Module","thread",$object);
     $this->_mainContent->assign("content",$content);
+    
+    $relatedTags = $threadModel->relatedTags($tag);
+    $this->_mainContent->assign("relatedTags",$relatedTags);
 
     $this->_mainContent->assign("tag",$tag);
 
