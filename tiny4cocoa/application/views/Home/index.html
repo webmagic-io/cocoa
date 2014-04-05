@@ -41,6 +41,7 @@
     </div>
   </div>
 
+
     <div class="siderbar-unit">
     <strong>移民和海外工作导引</strong>
     <div class="newsblock">
@@ -287,8 +288,49 @@
 
       </ul>
     </div>
+
+
+    
+  </div>
+  <div class="siderbar-unit">
+      <h4>Tags</h4>
+      <div id="wordcloud" class="wordcloud">
+        {foreach from=$tags item=item}
+          <span data-weight="{$item.c}">
+            <a href="/tag/name/{$item.tagname}/" target="_blank">
+              {$item.tagname}
+            </a>
+          </span>
+        {/foreach}
+      </div>
   </div>
 
+
 </div>
 
 </div>
+
+    <style type="text/css">
+      .wordcloud {
+        height: 400px;
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+    </style>
+<script>
+  $(document).ready(function(){
+    $("#wordcloud").awesomeCloud({
+      "size" : {
+        "grid" : 16,
+        "normalize" : false
+      },
+      "options" : {
+        "color" : "random-dark",
+        "rotationRatio" : 0.35,
+        "printMultiplier" : 3,
+        "sort" : "random"
+      },
+      "shape" : "square"
+    });
+  });
+</script>

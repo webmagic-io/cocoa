@@ -42,6 +42,10 @@ class HomeController extends baseController
     }
     $this->_mainContent->assign("users",$users);
 
+    $threadModel = new ThreadModel();
+    $tags = $threadModel->tags();
+    $this->_mainContent->assign("tags",$tags);
+
 
     $this->_mainContent->assign("pageControl",$pageControl);
     $this->_mainContent->assign("threads",$threads);
