@@ -4,9 +4,18 @@ class TagController extends baseController
   public function __construct($pathinfo,$controller) {
 		
     parent::__construct($pathinfo,$controller);
-    $this->_view->assign("active","thread");
+    $this->_view->assign("active","tag");
   }
- 
+  
+  public function indexAction(){
+
+    $threadModel = new ThreadModel();
+    $tags = $threadModel->tags();
+    $this->_mainContent->assign("tags",$tags);
+
+    $this->display();
+  }
+
   public function nameAction() {
   
     $tag = urldecode($this->strVal(3));

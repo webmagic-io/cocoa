@@ -5,7 +5,7 @@
 <title>{$title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/static/css/20140225/" />
-<script src="/static/js/20140330/" type="text/javascript"></script>
+<script src="/static/js/20140405/" type="text/javascript"></script>
 {if $userid}
   <script src="/static/userjs/20140402-1/" type="text/javascript"></script>
 {/if}
@@ -43,6 +43,11 @@ window.google_analytics_uacct = "UA-53077-22";
             class="active"
             {/if}
             ><a href="/user/">声望榜</a></li>
+            <li
+            {if $active=="tag"}
+            class="active"
+            {/if}
+            ><a href="/tag/">Tag</a></li>
             <li
             {if $active=="donate"}
             class="active"

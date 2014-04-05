@@ -32,7 +32,8 @@ class StaticController extends tinyApp_Controller
     include("$framework/flot/jquery.flot.categories.js");
     include("$framework/Jcrop/js/jquery.Jcrop.min.js");
     include("$framework/jsvote/src/jquery.jsvote.js");
-    
+    include("$framework/jQuery.awesomeCloud.plugin/jquery.awesomeCloud-0.2.min.js");
+
     include("$path/base.js");
   }
 

@@ -677,6 +677,15 @@ class ThreadModel extends baseDbModel {
     $result = $this->fetchArray($sql);
     return $result;
   }
+
+  public function tags() {
+
+    $sql = "SELECT `tagname`,count(`tagname`) as `c` 
+            FROM `threadtags` 
+            GROUP BY `tagname`";
+    $result = $this->fetchArray($sql);
+    return $result;
+  }
 }
 
 

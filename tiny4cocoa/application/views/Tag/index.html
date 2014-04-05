@@ -1,0 +1,44 @@
+    <style type="text/css">
+      .wordcloud {
+        height: 800px;
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+    </style>
+
+<div class="row">
+
+  <div class="span12">
+    <div class="content-unit">
+    	<h4>Tags</h4>
+      <div id="wordcloud" class="wordcloud">
+        {foreach from=$tags item=item}
+          <span data-weight="{$item.c}">
+            <a href="/tag/name/{$item.tagname}/" target="_blank">
+              {$item.tagname}
+            </a>
+          </span>
+        {/foreach}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#wordcloud").awesomeCloud({
+      "size" : {
+        "grid" : 16,
+        "normalize" : false
+      },
+      "options" : {
+        "color" : "random-dark",
+        "rotationRatio" : 0.35,
+        "printMultiplier" : 3,
+        "sort" : "random"
+      },
+      "shape" : "square"
+    });
+  });
+</script>
