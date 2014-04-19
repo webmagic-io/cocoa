@@ -279,7 +279,7 @@ class ThreadController extends baseController
     
     $thread = $threadModel->threadById($id,0);
 
-    if($thread["createbyid"]!=$this->userid)
+    if($thread["createbyid"]!=$this->userid && $this->userid!=2)
       header("location: /thread/show/$id/");
 
     $object["action"] = "editThread";

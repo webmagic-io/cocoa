@@ -183,7 +183,7 @@ function sendweibo() {
               {/if}
             {/if}
           
-            {if $userid==$thread.createbyid}
+            {if $userid==$thread.createbyid || $userid==2}
               <a href="/thread/editthread/{$thread.id}/">编辑</a>
             {/if}
           </div>
